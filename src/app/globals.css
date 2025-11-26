@@ -1,26 +1,85 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* Global base theme */
+@layer theme {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --dark: hsl(0 0% 0%);
+    --light: hsl(0 0% 98%);
+
+    --background: hsl(0 0 98%);
+
+    --foreground: hsl(0 0% 5%);
+    --foreground-secondary: hsl(0 0% 40%);
+    --foreground-secondary-inverted: hsl(0 0% 60%);
+
+    --outline: hsl(0 0% 75%);
   }
 }
 
+/* Inline CSS variables exposed to components */
+@theme inline {
+  --color-light: var(--light);
+  --color-dark: var(--dark);
+
+  --color-background: var(--background);
+  --color-outline: var(--outline);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-foreground-secondary-inverted: var(--foreground-secondary-inverted);
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1.5rem;
+  --text-lg: 2rem;
+  --text-xl: 3rem;
+  --text-2xl: 4rem;
+
+  --spacing-2xs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 80px;
+
+  --font-sans: "Roboto";
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+/* Global element styling */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), sans-serif;
+  font-size: var(--text-sm);
+}
+
+button {
+  cursor: pointer;
+}
+
+li {
+  list-style: none;
 }

@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import FormMessage from "@/components/ui/FormMessage";
+import FormLabel from "@/components/ui/FormLabel";
+import { useState } from "react";
 
 const urlRegex = /^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/\S*)?$/;
 
@@ -16,12 +18,16 @@ const formSchema = z.object({
 });
 
 export default function UploadForm() {
-  const { setImageUrl } = useAnalyserContext();
+  const { setImageUrl, setFile } = useAnalyserContext();
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
+    watch,
   } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -29,18 +35,47 @@ export default function UploadForm() {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    setImageUrl(values.imgUrl);
+  const imgUrlValue = watch("imgUrl");
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setErrorMessage(null);
+    setLoading(true);
+
+    const form = new FormData();
+    form.append("url", values.imgUrl);
+
+    const res = await fetch("/api/validate-url-image", {
+      method: "POST",
+      body: form,
+    });
+
+    const data = await res.json();
+    setLoading(false);
+
+    if (res.ok) {
+      setImageUrl(values.imgUrl);
+      setFile(null);
+      setErrorMessage(null);
+      reset();
+    } else {
+      setErrorMessage(data.error ?? "Something went wrong");
+      return;
+    }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-md">
       <div className="flex flex-col gap-xs">
-        <Input {...register("imgUrl")} placeholder="Enter Image URL..." />
+        <FormLabel htmlFor="imgUrl">Image URL</FormLabel>
+        <Input id="imgUrl" {...register("imgUrl")} placeholder="https://" />
         {errors.imgUrl && <FormMessage>{errors.imgUrl.message}</FormMessage>}
       </div>
-
-      <Button type="submit">Get Image</Button>
+      {errorMessage && <FormMessage>{errorMessage}</FormMessage>}
+      <Button
+        disabled={loading || !!errors.imgUrl || imgUrlValue.trim() === ""}
+      >
+        Get Image
+      </Button>
     </form>
   );
 }

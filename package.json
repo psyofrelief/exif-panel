@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "tsc": "tsc --noEmit",
+    "tsc": "eslint --color",
     "check": "yarn lint && yarn tsc"
   },
   "dependencies": {

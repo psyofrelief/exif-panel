@@ -4,9 +4,10 @@ import Input from "@/components/ui/Input";
 import { useAnalyserContext } from "@/contexts/analyserContext";
 import Error from "next/error";
 import Image from "next/image";
+import UploadForm from "./forms/uploadForm";
 
 export default function ImagePanel() {
-  const { setFile, file, imageUrl, setImageUrl, error, setError, blobUrl } =
+  const { setFile, file, imageUrl, error, setError, blobUrl } =
     useAnalyserContext();
 
   return (
@@ -28,16 +29,7 @@ export default function ImagePanel() {
           onError={() => setError("Couldn't load image")}
         />
       )}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          const value = new FormData(e.currentTarget).get("imgUrl") as string;
-          setImageUrl(value);
-        }}
-      >
-        <Input name="imgUrl" placeholder="Enter URL..." />
-        <Button type="submit">Get Image</Button>
-      </form>
+      <UploadForm />
 
       {error && <Error statusCode={400} title={error} />}
     </Panel>

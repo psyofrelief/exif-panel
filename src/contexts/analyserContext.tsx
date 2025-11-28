@@ -1,17 +1,22 @@
 "use client";
 
+import { ImageMetadata } from "@/types/analyser";
 import { createContext, useContext, useState, useMemo, ReactNode } from "react";
 
 type AnalyserContextType = {
   file: File | null;
   setFile: (f: File | null) => void;
+
   imageUrl: string;
   setImageUrl: (url: string) => void;
+
   error: string;
   setError: (e: string) => void;
-  blobUrl: string | null; // derived!
-  metadata: string;
-  setMetadata: (url: string) => void;
+
+  blobUrl: string | null;
+
+  metadata: ImageMetadata;
+  setMetadata: React.Dispatch<React.SetStateAction<ImageMetadata>>;
 };
 
 const AnalyserContext = createContext<AnalyserContextType | null>(null);
@@ -20,7 +25,11 @@ export function AnalyserProvider({ children }: { children: ReactNode }) {
   const [file, setFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
-  const [metadata, setMetadata] = useState("");
+  const [metadata, setMetadata] = useState<ImageMetadata>({
+    exif: null,
+    xmp: null,
+    rawExif: null,
+  });
 
   // derive blob url whenever file changes
   const blobUrl = useMemo(() => {

@@ -52,7 +52,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "No image provided" }, { status: 400 });
   }
 
-  const exif = await exifr.parse(buffer, {
+  const metadata = await exifr.parse(buffer, {
     tiff: true,
     exif: true,
     gps: true,
@@ -63,5 +63,96 @@ export async function POST(req: Request) {
     interop: true,
   });
 
-  return NextResponse.json({ exif });
+  const width =
+    metadata.ExifImageWidth ??
+    metadata.ImageWidth ??
+    metadata.PixelXDimension ??
+    null;
+
+  const height =
+    metadata.ExifImageHeight ??
+    metadata.ImageHeight ??
+    metadata.PixelYDimension ??
+    null;
+
+  // EXIF bucket
+  const exifFields = {
+    Width: width,
+    Height: height,
+    FNumber: metadata.FNumber,
+    FocalLength: metadata.FocalLength,
+    ISO: metadata.ISO,
+    Aperture: metadata.ApertureValue,
+    ShutterSpeed: metadata.ShutterSpeedValue,
+    Flash: metadata.Flash,
+
+    ExposureTime: metadata.ExposureTime,
+    ExposureCompensation: metadata.ExposureCompensation,
+    MeteringMode: metadata.MeteringMode,
+    ExposureProgram: metadata.ExposureProgram,
+    SceneCaptureType: metadata.SceneCaptureType,
+
+    CreateDate: metadata.CreateDate,
+    DateTimeOriginal: metadata.DateTimeOriginal,
+
+    CameraMake: metadata.Make,
+    CameraModel: metadata.Model,
+    LensModel: metadata.LensModel,
+    FocalLengthIn35mmFormat: metadata.FocalLengthIn35mmFormat,
+    Software: metadata.Software,
+
+    WhiteBalance: metadata.WhiteBalance,
+    LightSource: metadata.LightSource,
+
+    XResolution: metadata.XResolution,
+    YResolution: metadata.YResolution,
+
+    GPSLatitude: metadata.GPSLatitude,
+    GPSLongitude: metadata.GPSLongitude,
+    GPSAltitude: metadata.GPSAltitude,
+  };
+
+  // Illustrator / Lightroom / XMP bucket
+  const xmpFields = {
+    Exposure2012: metadata.Exposure2012,
+    Contrast2012: metadata.Contrast2012,
+    Highlights2012: metadata.Highlights2012,
+    Shadows2012: metadata.Shadows2012,
+    Whites2012: metadata.Whites2012,
+    Blacks2012: metadata.Blacks2012,
+
+    IncrementalTemperature: metadata.IncrementalTemperature,
+    IncrementalTint: metadata.IncrementalTint,
+
+    Clarity2012: metadata.Clarity2012,
+    Vibrance: metadata.Vibrance,
+    Saturation: metadata.Saturation,
+
+    ToneCurve: metadata.ToneCurve,
+    ToneCurveRed: metadata.ToneCurveRed,
+    ToneCurveGreen: metadata.ToneCurveGreen,
+    ToneCurveBlue: metadata.ToneCurveBlue,
+    ToneCurvePV2012: metadata.ToneCurvePV2012,
+    ToneCurvePV2012Red: metadata.ToneCurvePV2012Red,
+    ToneCurvePV2012Green: metadata.ToneCurvePV2012Green,
+    ToneCurvePV2012Blue: metadata.ToneCurvePV2012Blue,
+
+    GrainAmount: metadata.GrainAmount,
+    Dehaze: metadata.Dehaze,
+    SplitToningBalance: metadata.SplitToningBalance,
+    SplitToningHighlightHue: metadata.SplitToningHighlightHue,
+    SplitToningHighlightSaturation: metadata.SplitToningHighlightSaturation,
+    SplitToningShadowHue: metadata.SplitToningShadowHue,
+    SplitToningShadowSaturation: metadata.SplitToningShadowSaturation,
+
+    SharpenRadius: metadata.SharpenRadius,
+    SharpenDetail: metadata.SharpenDetail,
+    SharpenEdgeMasking: metadata.SharpenEdgeMasking,
+  };
+
+  return NextResponse.json({
+    exif: exifFields,
+    xmp: xmpFields,
+    rawExif: metadata,
+  });
 }

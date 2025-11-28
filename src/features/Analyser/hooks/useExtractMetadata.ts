@@ -17,6 +17,14 @@ export function useExtractMetadata() {
     if (!res.ok) return;
 
     const data = await res.json();
-    setMetadata(data.exif);
+
+    setMetadata((prev) => ({
+      ...prev,
+      exif: data.exif,
+      rawExif: data.rawExif,
+      xmp: data.xmp,
+    }));
+
+    console.log("Extracted metadata:", data.rawExif);
   };
 }

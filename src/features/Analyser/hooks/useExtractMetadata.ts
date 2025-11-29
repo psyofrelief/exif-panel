@@ -23,6 +23,7 @@ export function useExtractMetadata() {
       exif: data.exif,
       rawExif: data.rawExif,
       xmp: data.xmp,
+      iptc: data.iptc,
     }));
 
     console.log("Extracted metadata:", data.rawExif);

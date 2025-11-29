@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import exifr from "exifr";
+import { formatIptcValue } from "@/features/Analyser/utils/format";
 
 export async function POST(req: Request) {
   const form = await req.formData();
@@ -150,9 +151,21 @@ export async function POST(req: Request) {
     SharpenEdgeMasking: metadata.SharpenEdgeMasking,
   };
 
+  const iptcRaw = {
+    DateCreated: metadata.DateCreated,
+    TimeCreated: metadata.TimeCreated,
+    DigitalCreationDate: metadata.DigitalCreationDate,
+    DigitalCreationTime: metadata.DigitalCreationTime,
+  };
+
+  const iptc = Object.fromEntries(
+    Object.entries(iptcRaw).map(([k, v]) => [k, formatIptcValue(v)])
+  );
+
   return NextResponse.json({
     exif: exifFields,
     xmp: xmpFields,
     rawExif: metadata,
+    iptc,
   });
 }

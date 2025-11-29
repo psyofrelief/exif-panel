@@ -29,6 +29,7 @@ export function AnalyserProvider({ children }: { children: ReactNode }) {
     exif: null,
     xmp: null,
     rawExif: null,
+    iptc: null,
   });
 
   // derive blob url whenever file changes

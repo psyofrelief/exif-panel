@@ -20,4 +20,5 @@ export type ImageMetadata = {
   exif: ExifData | null;
   xmp: Record<string, unknown> | null;
   rawExif: Record<string, unknown> | null;
+  iptc: Record<string, unknown> | null;
 };

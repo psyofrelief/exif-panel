@@ -18,6 +18,10 @@ export default function ExifPanel() {
     await extract();
   };
 
+  const handleDownloadExif = () => {
+    if (!rawExif) return;
+    downloadExifJSON(rawExif, "raw-exif.json");
+  };
   const hasExif = !!exif && Object.keys(exif);
 
   useEffect(() => {
@@ -28,6 +32,9 @@ export default function ExifPanel() {
     <Panel className="border-r size-full bg-red-200 col-span-2">
       <Button type="button" onClick={handleExtract}>
         Extract
+      </Button>
+      <Button type="button" onClick={handleDownloadExif} className="mb-md">
+        Download Raw EXIF
       </Button>
       {!hasExif && <p className="my-md">No EXIF data found for this image.</p>}
 

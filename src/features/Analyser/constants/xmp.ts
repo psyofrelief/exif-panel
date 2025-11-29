@@ -323,3 +323,7 @@ export const XMP_GROUPS = [
     keys: ["GrainAmount", "GrainSize", "GrainFrequency"],
   },
 ];
+
+export const DEFAULT_XMP = Object.fromEntries(
+  XMP_SLIDERS.map((s) => [s.key, 0])
+);

@@ -5,7 +5,7 @@ import { useExtractMetadata } from "@/features/Analyser/hooks/useExtractMetadata
 import { useEffect } from "react";
 import ExifRow from "./components/ExifRow";
 import { formatValue } from "./utils/format";
-import { EXIF_GROUPS } from "./constants/exifFields";
+import { EXIF_GROUPS } from "./constants/exif";
 
 export default function ExifPanel() {
   const { metadata } = useAnalyserContext();

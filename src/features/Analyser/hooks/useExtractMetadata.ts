@@ -23,10 +23,10 @@ export function useExtractMetadata() {
 
     setMetadata((prev) => ({
       ...prev,
-      exif: data.exif,
-      rawExif: data.rawExif,
-      xmp: data.xmp,
-      iptc: data.iptc,
+      exif: data.exif ?? null,
+      rawExif: data.rawExif ?? null,
+      xmp: data.xmp ?? null,
+      iptc: data.iptc ?? null,
     }));
 
     console.log("Extracted metadata:", data.rawExif);

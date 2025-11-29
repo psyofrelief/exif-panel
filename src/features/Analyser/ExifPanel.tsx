@@ -9,7 +9,7 @@ import { EXIF_GROUPS } from "./constants/exif";
 import { downloadExifJSON } from "./utils/exportExif";
 
 export default function ExifPanel() {
-  const { metadata } = useAnalyserContext();
+  const { metadata, file, blobUrl } = useAnalyserContext();
   const { exif, rawExif, iptc, xmp } = metadata;
 
   const extract = useExtractMetadata();
@@ -18,10 +18,7 @@ export default function ExifPanel() {
     await extract();
   };
 
-  const handleDownloadExif = () => {
-    if (!rawExif) return;
-    downloadExifJSON(rawExif, "raw-exif.json");
-  };
+  const hasExif = !!exif && Object.keys(exif);
 
   useEffect(() => {
     if (metadata) console.log("Metadata updated in ExifPanel:", metadata);
@@ -32,9 +29,7 @@ export default function ExifPanel() {
       <Button type="button" onClick={handleExtract}>
         Extract
       </Button>
-      <Button type="button" onClick={handleDownloadExif} className="mb-md">
-        Download Raw EXIF
-      </Button>
+      {!hasExif && <p className="my-md">No EXIF data found for this image.</p>}
 
       {EXIF_GROUPS.map((group) => (
         <div key={group.title} className="mb-lg">
@@ -87,6 +82,8 @@ export default function ExifPanel() {
       <p className="my-lg">RAW XMP</p>
       <ul className="mt-md border-t pt-md">
         {xmp &&
+          file &&
+          blobUrl &&
           Object.entries(xmp).map(([key, value]) => {
             return (
               <li key={key} className="flex justify-between">

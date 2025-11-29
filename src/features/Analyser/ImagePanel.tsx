@@ -4,10 +4,41 @@ import { useAnalyserContext } from "@/contexts/analyserContext";
 import Error from "next/error";
 import Image from "next/image";
 import UploadForm from "./forms/uploadForm";
+import { useEffect } from "react";
+import { useExtractMetadata } from "./hooks/useExtractMetadata";
+import { set } from "zod";
 
 export default function ImagePanel() {
   const { setFile, file, setImageUrl, imageUrl, error, setError, blobUrl } =
     useAnalyserContext();
+
+  const extract = useExtractMetadata();
+
+  const handleExtract = async () => {
+    try {
+      await extract();
+    } catch (err) {
+      setFile(null);
+      setImageUrl("");
+      setError("Failed to extract metadata");
+      console.error("Error:", err);
+    }
+  };
+
+  useEffect(() => {
+    if (file && blobUrl && !error) {
+      const allowed = ["image/jpeg", "image/png", "image/tiff", "image/webp"];
+      if (!allowed.includes(file.type)) {
+        setError("Unsupported file type");
+        return;
+      }
+      handleExtract();
+    }
+
+    if (imageUrl && !error) {
+      handleExtract();
+    }
+  }, [file, imageUrl]);
 
   //TODO: render supported image formats
   return (
@@ -19,7 +50,7 @@ export default function ImagePanel() {
           setImageUrl("");
         }}
       />
-      {file && blobUrl && (
+      {file && blobUrl && !error && (
         <Image alt="image" height={256} width={256} src={blobUrl} />
       )}
 
@@ -34,7 +65,7 @@ export default function ImagePanel() {
       )}
       <UploadForm />
 
-      {error && <Error statusCode={400} title={error} />}
+      {error && <div className="text-red-600 text-sm mt-md">{error}</div>}
     </Panel>
   );
 }

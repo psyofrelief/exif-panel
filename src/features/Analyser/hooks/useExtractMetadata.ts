@@ -14,7 +14,10 @@ export function useExtractMetadata() {
       body: formData,
     });
 
-    if (!res.ok) return;
+    if (!res.ok) {
+      console.error("Failed to extract metadata");
+      throw new Error("Failed to extract metadata");
+    }
 
     const data = await res.json();
 

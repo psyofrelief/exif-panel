@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import ExifRow from "./components/ExifRow";
 import { formatValue } from "./utils/format";
 import { EXIF_GROUPS } from "./constants/exif";
+import { downloadExifJSON } from "./utils/exportExif";
 
 export default function ExifPanel() {
   const { metadata } = useAnalyserContext();
@@ -17,6 +18,11 @@ export default function ExifPanel() {
     await extract();
   };
 
+  const handleDownloadExif = () => {
+    if (!rawExif) return;
+    downloadExifJSON(rawExif, "raw-exif.json");
+  };
+
   useEffect(() => {
     if (metadata) console.log("Metadata updated in ExifPanel:", metadata);
   }, [metadata]);
@@ -25,6 +31,9 @@ export default function ExifPanel() {
     <Panel className="border-r size-full bg-red-200 col-span-2">
       <Button type="button" onClick={handleExtract}>
         Extract
+      </Button>
+      <Button type="button" onClick={handleDownloadExif} className="mb-md">
+        Download Raw EXIF
       </Button>
 
       {EXIF_GROUPS.map((group) => (

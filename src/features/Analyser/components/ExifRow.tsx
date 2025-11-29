@@ -1,4 +1,3 @@
-// src/features/analyser/components/ExifRow.tsx
 import { formatDate } from "../utils/format";
 
 export default function ExifRow({

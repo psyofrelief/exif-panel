@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import exifr from "exifr";
 import { formatIptcValue } from "@/features/Analyser/utils/format";
+import { extractXmpSliders } from "@/features/Analyser/utils/flattenXmp";
 
 export async function POST(req: Request) {
   const form = await req.formData();
@@ -113,44 +114,6 @@ export async function POST(req: Request) {
     GPSAltitude: metadata.GPSAltitude,
   };
 
-  // Illustrator / Lightroom / XMP bucket
-  const xmpFields = {
-    Exposure2012: metadata.Exposure2012,
-    Contrast2012: metadata.Contrast2012,
-    Highlights2012: metadata.Highlights2012,
-    Shadows2012: metadata.Shadows2012,
-    Whites2012: metadata.Whites2012,
-    Blacks2012: metadata.Blacks2012,
-
-    IncrementalTemperature: metadata.IncrementalTemperature,
-    IncrementalTint: metadata.IncrementalTint,
-
-    Clarity2012: metadata.Clarity2012,
-    Vibrance: metadata.Vibrance,
-    Saturation: metadata.Saturation,
-
-    ToneCurve: metadata.ToneCurve,
-    ToneCurveRed: metadata.ToneCurveRed,
-    ToneCurveGreen: metadata.ToneCurveGreen,
-    ToneCurveBlue: metadata.ToneCurveBlue,
-    ToneCurvePV2012: metadata.ToneCurvePV2012,
-    ToneCurvePV2012Red: metadata.ToneCurvePV2012Red,
-    ToneCurvePV2012Green: metadata.ToneCurvePV2012Green,
-    ToneCurvePV2012Blue: metadata.ToneCurvePV2012Blue,
-
-    GrainAmount: metadata.GrainAmount,
-    Dehaze: metadata.Dehaze,
-    SplitToningBalance: metadata.SplitToningBalance,
-    SplitToningHighlightHue: metadata.SplitToningHighlightHue,
-    SplitToningHighlightSaturation: metadata.SplitToningHighlightSaturation,
-    SplitToningShadowHue: metadata.SplitToningShadowHue,
-    SplitToningShadowSaturation: metadata.SplitToningShadowSaturation,
-
-    SharpenRadius: metadata.SharpenRadius,
-    SharpenDetail: metadata.SharpenDetail,
-    SharpenEdgeMasking: metadata.SharpenEdgeMasking,
-  };
-
   const iptcRaw = {
     DateCreated: metadata.DateCreated,
     TimeCreated: metadata.TimeCreated,
@@ -161,6 +124,8 @@ export async function POST(req: Request) {
   const iptc = Object.fromEntries(
     Object.entries(iptcRaw).map(([k, v]) => [k, formatIptcValue(v)])
   );
+
+  const xmpFields = extractXmpSliders(metadata);
 
   return NextResponse.json({
     exif: exifFields,

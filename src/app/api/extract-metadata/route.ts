@@ -6,7 +6,12 @@ import { extractXmpSliders } from "@/features/Analyser/utils/flattenXmp";
 export async function POST(req: Request) {
   const form = await req.formData();
   const file = form.get("file") as File | null;
-  const imageUrl = form.get("imageUrl") as string | null;
+  let imageUrl = form.get("imageUrl") as string | null;
+
+  if (imageUrl && imageUrl.startsWith("/")) {
+    const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    imageUrl = base + imageUrl;
+  }
 
   let buffer: Buffer;
 
@@ -42,7 +47,15 @@ export async function POST(req: Request) {
     }
 
     const contentType = res.headers.get("content-type") || "";
-    if (!contentType.startsWith("image/")) {
+
+    // Allow Next.js public assets
+    const isLikelyImage =
+      contentType.startsWith("image/") ||
+      imageUrl.startsWith("/") ||
+      imageUrl.startsWith("http://localhost") ||
+      imageUrl.startsWith("https://myplaceholderuntilibuydomainfaried.com");
+
+    if (!isLikelyImage) {
       return NextResponse.json(
         { error: "URL does not point to an image" },
         { status: 400 }

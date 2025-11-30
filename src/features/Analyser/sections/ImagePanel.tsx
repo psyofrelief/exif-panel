@@ -5,6 +5,8 @@ import Image from "next/image";
 import UploadForm from "../forms/uploadForm";
 import { useEffect } from "react";
 import { useExtractMetadata } from "../hooks/useExtractMetadata";
+import { samples } from "../constants/samples";
+import SampleImage from "../components/SampleImage";
 
 export default function ImagePanel() {
   const { setFile, file, setImageUrl, imageUrl, error, setError, blobUrl } =
@@ -40,7 +42,7 @@ export default function ImagePanel() {
 
   //TODO: render supported image formats
   return (
-    <Panel className="border-r gap-lg size-full bg-blue-200 col-span-3 justify-center items-center">
+    <Panel className="border-r gap-lg size-full bg-blue-200 col-span-3  items-center">
       <Input
         type="file"
         onChange={(e) => {
@@ -64,6 +66,11 @@ export default function ImagePanel() {
       <UploadForm />
 
       {error && <div className="text-red-600 text-sm mt-md">{error}</div>}
+      <div className="grid grid-cols-4 gap-sm">
+        {samples.slice(0, 4).map((val, idx) => (
+          <SampleImage url={val} idx={idx} key={idx} />
+        ))}
+      </div>
     </Panel>
   );
 }

@@ -1,13 +1,19 @@
 import { useAnalyserContext } from "@/contexts/analyserContext";
 
 export function useExtractMetadata() {
-  const { file, setMetadata } = useAnalyserContext();
+  const { file, imageUrl, setMetadata } = useAnalyserContext();
 
   return async () => {
-    if (!file) return;
+    if (!file && !imageUrl) return;
 
     const formData = new FormData();
-    formData.append("file", file);
+
+    // Prefer file -> fallback to URL
+    if (file) {
+      formData.append("file", file);
+    } else if (imageUrl) {
+      formData.append("imageUrl", imageUrl);
+    }
 
     const res = await fetch("/api/extract-metadata", {
       method: "POST",
@@ -28,7 +34,5 @@ export function useExtractMetadata() {
       xmp: data.xmp ?? null,
       iptc: data.iptc ?? null,
     }));
-
-    console.log("Extracted metadata:", data.rawExif);
   };
 }

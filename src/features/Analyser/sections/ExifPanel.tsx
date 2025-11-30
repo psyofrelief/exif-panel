@@ -3,10 +3,10 @@ import Button from "@/components/ui/Button";
 import { useAnalyserContext } from "@/contexts/analyserContext";
 import { useExtractMetadata } from "@/features/Analyser/hooks/useExtractMetadata";
 import { useEffect } from "react";
-import ExifRow from "./components/ExifRow";
-import { formatValue } from "./utils/format";
-import { EXIF_GROUPS } from "./constants/exif";
-import { downloadExifJSON } from "./utils/exportExif";
+import ExifRow from "../components/ExifRow";
+import { formatValue } from "../utils/format";
+import { EXIF_GROUPS } from "../constants/exif";
+import { downloadExifJSON } from "../utils/exportExif";
 
 export default function ExifPanel() {
   const { metadata, file, error } = useAnalyserContext();
@@ -48,7 +48,8 @@ export default function ExifPanel() {
               <ExifRow
                 key={key}
                 label={label}
-                //@ts-ignore
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-expect-error
                 value={formatValue(exif?.[key], format)}
               />
             ))}

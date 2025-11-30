@@ -1,19 +1,21 @@
 import Panel from "@/components/shared/Panel";
 import { useAnalyserContext } from "@/contexts/analyserContext";
-import XmpSliderRow from "./components/XmpSliderRow";
-import { XMP_GROUPS, XMP_SLIDERS, XMP_SLIDER_STYLES } from "./constants/xmp";
+import XmpSliderRow from "../components/XmpSliderRow";
+import { XMP_GROUPS, XMP_SLIDERS, XMP_SLIDER_STYLES } from "../constants/xmp";
 import Button from "@/components/ui/Button";
-import { buildXmpPreset, downloadXmp } from "./utils/exportXmp";
+import { buildXmpPreset, downloadXmp } from "../utils/exportXmp";
 
 export default function IllustratorPanel() {
-  const { metadata, file, blobUrl, error } = useAnalyserContext();
+  const { metadata, file, error } = useAnalyserContext();
   const xmp = metadata.xmp;
 
   const hasXmp = !!xmp && Object.keys(xmp).length > 0;
 
   const handleDownload = () => {
-    const preset = buildXmpPreset(xmp);
-    downloadXmp("preset", preset);
+    if (xmp) {
+      const preset = buildXmpPreset(xmp);
+      downloadXmp("preset", preset);
+    }
   };
 
   return (

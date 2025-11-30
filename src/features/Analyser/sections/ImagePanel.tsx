@@ -1,12 +1,10 @@
 import Panel from "@/components/shared/Panel";
 import Input from "@/components/ui/Input";
 import { useAnalyserContext } from "@/contexts/analyserContext";
-import Error from "next/error";
 import Image from "next/image";
-import UploadForm from "./forms/uploadForm";
+import UploadForm from "../forms/uploadForm";
 import { useEffect } from "react";
-import { useExtractMetadata } from "./hooks/useExtractMetadata";
-import { set } from "zod";
+import { useExtractMetadata } from "../hooks/useExtractMetadata";
 
 export default function ImagePanel() {
   const { setFile, file, setImageUrl, imageUrl, error, setError, blobUrl } =

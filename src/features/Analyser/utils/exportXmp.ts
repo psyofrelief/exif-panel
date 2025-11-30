@@ -1,4 +1,6 @@
-export function buildXmpPreset(xmp: Record<string, any>) {
+import { XmpData } from "@/types/analyser";
+
+export function buildXmpPreset(xmp: XmpData) {
   const entries = Object.entries(xmp)
     .filter(([_, v]) => typeof v !== "object" && v !== undefined)
     .map(([key, value]) => `    <crs:${key}>${value}</crs:${key}>`)

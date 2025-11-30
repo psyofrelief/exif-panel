@@ -1,7 +1,7 @@
 "use client";
-import ExifPanel from "@/features/Analyser/ExifPanel";
-import IllustratorPanel from "@/features/Analyser/IllustratorPanel";
-import ImagePanel from "@/features/Analyser/ImagePanel";
+import ExifPanel from "@/features/Analyser/sections/ExifPanel";
+import IllustratorPanel from "@/features/Analyser/sections/IllustratorPanel";
+import ImagePanel from "@/features/Analyser/sections/ImagePanel";
 
 export default function Home() {
   return (

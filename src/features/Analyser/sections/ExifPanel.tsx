@@ -7,10 +7,12 @@ import ExifRow from "../components/ExifRow";
 import { formatValue } from "../utils/format";
 import { EXIF_GROUPS } from "../constants/exif";
 import { downloadExifJSON } from "../utils/exportExif";
+import { hasMeaningfulExif } from "../utils/hasMeaningfulExif";
 
 export default function ExifPanel() {
   const { metadata, file, error } = useAnalyserContext();
   const { exif, rawExif, iptc, xmp } = metadata;
+  const meaningful = hasMeaningfulExif(exif);
 
   const extract = useExtractMetadata();
 
@@ -36,10 +38,9 @@ export default function ExifPanel() {
       <Button type="button" onClick={handleDownloadExif} className="mb-md">
         Download Raw EXIF
       </Button>
-      {file && !hasExif && !error && (
+      {file && !hasMeaningfulExif(exif) && !error && (
         <p className="my-md">No EXIF data found for this image.</p>
       )}
-
       {EXIF_GROUPS.map((group) => (
         <div key={group.title} className="mb-lg">
           <h3 className="mb-sm font-semibold">{group.title}</h3>
@@ -48,17 +49,17 @@ export default function ExifPanel() {
               <ExifRow
                 key={key}
                 label={label}
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-expect-error
-                value={formatValue(exif?.[key], format)}
+                value={meaningful ? formatValue(exif?.[key], format) : null}
               />
             ))}
           </ul>
         </div>
       ))}
 
+      <p className="my-lg">RAW EXIF</p>
       <ul className="mt-md border-t pt-md">
-        {rawExif &&
+        {hasMeaningfulExif(exif) &&
+          rawExif &&
           Object.entries(rawExif).map(([key, value]) => {
             if (typeof value === "object" && value !== null) return null;
 
@@ -76,7 +77,8 @@ export default function ExifPanel() {
 
       <p className="my-lg">IPTC</p>
       <ul className="mt-md border-t pt-md">
-        {iptc &&
+        {hasMeaningfulExif(exif) &&
+          iptc &&
           Object.entries(iptc).map(([key, value]) => {
             const display = formatValue(value);
             if (display === "") return null;
@@ -91,7 +93,8 @@ export default function ExifPanel() {
 
       <p className="my-lg">RAW XMP</p>
       <ul className="mt-md border-t pt-md">
-        {xmp &&
+        {hasMeaningfulExif(exif) &&
+          xmp &&
           file &&
           Object.entries(xmp).map(([key, value]) => {
             return (

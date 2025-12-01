@@ -9,12 +9,11 @@ export default function ExifRow({
   value: string | number | null | undefined;
   format?: "date";
 }) {
-  let display: string | number = "—";
+  let display: string | number | null = "—";
 
   // only try formatting if value exists
   if (value !== null && value !== undefined) {
     if (format === "date" && typeof value === "string") {
-      //@ts-ignore
       display = formatDate(value);
     } else if (typeof value === "number" && value % 1 !== 0) {
       display = Number(value.toFixed(2));

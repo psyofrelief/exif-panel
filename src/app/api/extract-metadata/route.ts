@@ -119,9 +119,6 @@ export async function POST(req: Request) {
     WhiteBalance: metadata.WhiteBalance,
     LightSource: metadata.LightSource,
 
-    XResolution: metadata.XResolution,
-    YResolution: metadata.YResolution,
-
     GPSLatitude: metadata.GPSLatitude,
     GPSLongitude: metadata.GPSLongitude,
     GPSAltitude: metadata.GPSAltitude,

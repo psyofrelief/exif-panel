@@ -42,7 +42,7 @@ export default function ImagePanel() {
 
   //TODO: render supported image formats
   return (
-    <Panel className="border-r gap-lg size-full bg-blue-200 col-span-3  items-center">
+    <Panel className="border-r gap-lg size-full  col-span-3  items-center">
       <Input
         type="file"
         onChange={(e) => {

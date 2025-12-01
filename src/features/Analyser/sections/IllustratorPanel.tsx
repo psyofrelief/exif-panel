@@ -19,7 +19,7 @@ export default function IllustratorPanel() {
   };
 
   return (
-    <Panel className="border-r size-full bg-green-200 col-span-2 p-md">
+    <Panel className="border-r size-full  col-span-2 p-md">
       <Button onClick={handleDownload} className="mb-md">
         Download XMP Preset
       </Button>

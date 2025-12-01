@@ -32,7 +32,7 @@ export default function ExifPanel() {
   }, [metadata]);
 
   return (
-    <Panel className="border-r size-full bg-red-200 col-span-2">
+    <Panel className="border-r size-full  col-span-2">
       <Button type="button" onClick={handleExtract}>
         Extract
       </Button>

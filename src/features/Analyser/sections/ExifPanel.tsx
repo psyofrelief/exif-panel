@@ -8,6 +8,7 @@ import { formatValue } from "../utils/format";
 import { EXIF_GROUPS } from "../constants/exif";
 import { downloadExifJSON } from "../utils/exportExif";
 import { hasMeaningfulExif } from "../utils/hasMeaningfulExif";
+import { useRemoveMetadata } from "../hooks/useRemoveMetadata";
 
 export default function ExifPanel() {
   const { metadata, file, error } = useAnalyserContext();
@@ -15,6 +16,7 @@ export default function ExifPanel() {
   const meaningful = hasMeaningfulExif(exif);
 
   const extract = useExtractMetadata();
+  const stripAndDownload = useRemoveMetadata();
 
   const handleExtract = async () => {
     await extract();
@@ -24,7 +26,6 @@ export default function ExifPanel() {
     if (!rawExif) return;
     downloadExifJSON(rawExif, "raw-exif.json");
   };
-  const hasExif = !!exif && Object.keys(exif);
 
   useEffect(() => {
     if (metadata) console.log("Metadata updated in ExifPanel:", metadata);
@@ -105,6 +106,9 @@ export default function ExifPanel() {
             );
           })}
       </ul>
+      <Button onClick={() => stripAndDownload()} type="button">
+        Remove Metadata and Download Image
+      </Button>
     </Panel>
   );
 }

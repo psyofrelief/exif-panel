@@ -10,7 +10,6 @@ import Button from "@/components/ui/Button";
 import FormMessage from "@/components/ui/FormMessage";
 import FormLabel from "@/components/ui/FormLabel";
 import { useState } from "react";
-import { useExtractMetadata } from "../hooks/useExtractMetadata";
 
 const urlRegex = /^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/\S*)?$/;
 

@@ -8,13 +8,14 @@ export async function POST(req: Request) {
   const file = form.get("file") as File | null;
   let imageUrl = form.get("imageUrl") as string | null;
 
-  if (imageUrl && imageUrl.startsWith("/")) {
+  if (imageUrl?.startsWith("/")) {
     const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
     imageUrl = base + imageUrl;
   }
 
   let buffer: Buffer;
 
+  // --- FILE MODE ---
   if (file) {
     if (
       !["image/jpeg", "image/png", "image/tiff", "image/webp"].includes(
@@ -26,38 +27,16 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    if (file.size > 10 * 1024 * 1024) {
-      return NextResponse.json({ error: "File too large" }, { status: 400 });
-    }
 
     buffer = Buffer.from(await file.arrayBuffer());
-  } else if (imageUrl) {
-    try {
-      new URL(imageUrl);
-    } catch {
-      return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
-    }
+  }
 
+  // --- URL MODE ---
+  else if (imageUrl) {
     const res = await fetch(imageUrl);
     if (!res.ok) {
       return NextResponse.json(
         { error: "Failed to fetch image" },
-        { status: 400 }
-      );
-    }
-
-    const contentType = res.headers.get("content-type") || "";
-
-    // Allow Next.js public assets
-    const isLikelyImage =
-      contentType.startsWith("image/") ||
-      imageUrl.startsWith("/") ||
-      imageUrl.startsWith("http://localhost") ||
-      imageUrl.startsWith("https://myplaceholderuntilibuydomainfaried.com");
-
-    if (!isLikelyImage) {
-      return NextResponse.json(
-        { error: "URL does not point to an image" },
         { status: 400 }
       );
     }
@@ -67,74 +46,53 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "No image provided" }, { status: 400 });
   }
 
-  const metadata = await exifr.parse(buffer, {
-    tiff: true,
-    exif: true,
-    gps: true,
-    xmp: true,
-    icc: true,
-    jfif: true,
-    iptc: true,
-    interop: true,
-  });
+  // Parse EXIF safely
+  let metadata: any = {};
+  try {
+    metadata =
+      (await exifr.parse(buffer, {
+        tiff: true,
+        exif: true,
+        gps: true,
+        xmp: true,
+        icc: true,
+        jfif: true,
+        iptc: true,
+        interop: true,
+      })) || {};
+  } catch (e) {
+    console.warn(
+      "No metadata found (EXIF parse failed). Continuing with empty metadata:",
+      e
+    );
+    metadata = {};
+  }
 
-  const width =
-    metadata.ExifImageWidth ??
-    metadata.ImageWidth ??
-    metadata.PixelXDimension ??
-    null;
-
-  const height =
-    metadata.ExifImageHeight ??
-    metadata.ImageHeight ??
-    metadata.PixelYDimension ??
-    null;
-
-  // EXIF bucket
+  // Build EXIF fields safely
   const exifFields = {
-    Width: width,
-    Height: height,
-    FNumber: metadata.FNumber,
-    FocalLength: metadata.FocalLength,
-    ISO: metadata.ISO,
-    Aperture: metadata.ApertureValue,
-    ShutterSpeed: metadata.ShutterSpeedValue,
-    Flash: metadata.Flash,
-
-    ExposureTime: metadata.ExposureTime,
-    ExposureCompensation: metadata.ExposureCompensation,
-    MeteringMode: metadata.MeteringMode,
-    ExposureProgram: metadata.ExposureProgram,
-    SceneCaptureType: metadata.SceneCaptureType,
-
-    CreateDate: metadata.CreateDate,
-    DateTimeOriginal: metadata.DateTimeOriginal,
-
-    CameraMake: metadata.Make,
-    CameraModel: metadata.Model,
-    LensModel: metadata.LensModel,
-    FocalLengthIn35mmFormat: metadata.FocalLengthIn35mmFormat,
-    Software: metadata.Software,
-
-    WhiteBalance: metadata.WhiteBalance,
-    LightSource: metadata.LightSource,
-
-    GPSLatitude: metadata.GPSLatitude,
-    GPSLongitude: metadata.GPSLongitude,
-    GPSAltitude: metadata.GPSAltitude,
+    Width: metadata?.ExifImageWidth ?? metadata?.ImageWidth ?? null,
+    Height: metadata?.ExifImageHeight ?? metadata?.ImageHeight ?? null,
+    FNumber: metadata?.FNumber ?? null,
+    ISO: metadata?.ISO ?? null,
+    LensModel: metadata?.LensModel ?? null,
+    CameraMake: metadata?.Make ?? null,
+    CameraModel: metadata?.Model ?? null,
+    DateTimeOriginal: metadata?.DateTimeOriginal ?? null,
   };
 
+  // IPTC safe formatting
   const iptcRaw = {
-    DateCreated: metadata.DateCreated,
-    TimeCreated: metadata.TimeCreated,
-    DigitalCreationDate: metadata.DigitalCreationDate,
-    DigitalCreationTime: metadata.DigitalCreationTime,
+    DateCreated: metadata?.DateCreated,
+    TimeCreated: metadata?.TimeCreated,
+    DigitalCreationDate: metadata?.DigitalCreationDate,
+    DigitalCreationTime: metadata?.DigitalCreationTime,
   };
 
   const iptc = Object.fromEntries(
     Object.entries(iptcRaw).map(([k, v]) => [k, formatIptcValue(v)])
   );
 
+  // XMP sliders safely extracted
   const xmpFields = extractXmpSliders(metadata);
 
   return NextResponse.json({

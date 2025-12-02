@@ -4,7 +4,10 @@ import { faqs } from "@/types/faq";
 
 export default function FaqSection() {
   return (
-    <div className="min-h-screen-minus-navbar flex justify-center items-center border-t-outline border-t">
+    <div
+      id="faq"
+      className="min-h-screen flex justify-center items-center border-t-outline border-t"
+    >
       <div className="flex flex-col gap-y-xl max-w-fit items-center">
         <Heading size="large">Frequently Asked Questions</Heading>
 

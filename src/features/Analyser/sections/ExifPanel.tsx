@@ -35,6 +35,7 @@ export default function ExifPanel() {
         buttonLabel="Download Raw EXIF"
         onClickAction={handleDownloadExif}
       />
+      {/* @ts-ignore */}
       {file && !hasMeaningfulExif(exif) && !error && (
         <p className="my-md">No EXIF data found for this image.</p>
       )}

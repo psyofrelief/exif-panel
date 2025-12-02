@@ -1,14 +1,20 @@
 import Image from "next/image";
+// Import the necessary hook for navigation
+import { useRouter } from "next/navigation";
 import { useAnalyserContext } from "@/contexts/analyserContext";
+import { cn } from "@/lib/utils";
 
 export default function SampleImage({
   url,
   idx,
+  gallery = false,
 }: {
   url: string;
   idx: number;
+  gallery?: boolean;
 }) {
   const { setImageUrl, setFile, setError } = useAnalyserContext();
+  const router = useRouter();
 
   return (
     <Image
@@ -16,11 +22,12 @@ export default function SampleImage({
       height={256}
       src={url}
       alt={`Sample Photo ${idx}`}
-      className="aspect-square rounded-xs"
+      className={cn("aspect-square rounded-xs", gallery && "w-full")}
       onClick={() => {
         setImageUrl(url);
         setFile(null);
         setError("");
+        router.push("/");
       }}
     />
   );

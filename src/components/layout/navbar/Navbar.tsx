@@ -1,8 +1,12 @@
+"use client";
 import Link from "next/link";
 import Button from "../../ui/Button";
 import NavLink from "./NavLink";
+import { useNavClick } from "@/app/hooks/useNavClick";
 
 export default function Navbar() {
+  const handleNavClick = useNavClick();
+
   return (
     <nav className="w-full flex justify-between p-sm border-b bg-background  border-b-outline">
       <div className="flex items-center gap-x-lg">
@@ -14,7 +18,7 @@ export default function Navbar() {
         <ul className="flex items-center gap-x-md">
           <NavLink label="About" href="/about" />
           <NavLink label="Sample Photos" href="/sample-photos" />
-          <NavLink label="FAQ" href="/faq" />
+          <NavLink onClick={handleNavClick} label="FAQ" href="/about#faq" />
         </ul>
       </div>
       <Link href={"/"} className="flex">

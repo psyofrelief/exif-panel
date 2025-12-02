@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function ProcessSection() {
   return (
-    <div className="min-h-screen-minus-navbar flex justify-center items-center ">
+    <div className="min-h-screen flex justify-center items-center ">
       <div className="flex gap-[200px] max-w-fit">
         <div className="flex flex-col gap-y-xs max-w-[512px] justify-between">
           <p className="font-mono uppercase text-foreground-secondary">

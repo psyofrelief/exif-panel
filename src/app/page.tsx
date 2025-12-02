@@ -1,13 +1,13 @@
 "use client";
-import ExifPanel from "@/features/Analyser/sections/ExifPanel";
-import IllustratorPanel from "@/features/Analyser/sections/IllustratorPanel";
+import XmpPanel from "@/features/Analyser/sections/ExifPanel";
+import IllustratorPanel from "@/features/Analyser/sections/XmpPanel";
 import ImagePanel from "@/features/Analyser/sections/ImagePanel";
 
 export default function Home() {
   return (
-    <div className="grid grid-cols-7 min-h-screen items-center justify-center bg-background">
+    <div className="grid grid-cols-3 relative bg-background h-screen-minus-navbar overflow-clip">
       <ImagePanel />
-      <ExifPanel />
+      <XmpPanel />
       <IllustratorPanel />
     </div>
   );

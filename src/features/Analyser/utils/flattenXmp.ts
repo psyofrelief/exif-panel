@@ -1,6 +1,6 @@
 import { XMP_SLIDERS } from "../constants/xmp";
 
-export function extractXmpSliders(obj: Record<string, any>) {
+export function extractXmpSliders(obj: Record<string, null>) {
   const allowedKeys = XMP_SLIDERS.map((s) => s.key);
   const sliders: Record<string, number> = {};
 

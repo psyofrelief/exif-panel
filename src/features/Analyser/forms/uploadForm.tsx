@@ -64,18 +64,24 @@ export default function UploadForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-md">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex w-full flex-col gap-md"
+    >
       <div className="flex flex-col gap-xs">
         <FormLabel htmlFor="imgUrl">Image URL</FormLabel>
-        <Input id="imgUrl" {...register("imgUrl")} placeholder="https://" />
+        <div className="flex xl:flex-row flex-col items-center gap-sm">
+          <Input id="imgUrl" {...register("imgUrl")} placeholder="https://" />
+          <Button
+            disabled={loading || !!errors.imgUrl || imgUrlValue.trim() === ""}
+            className="xl:w-fit w-full"
+          >
+            Get Image
+          </Button>
+        </div>
         {errors.imgUrl && <FormMessage>{errors.imgUrl.message}</FormMessage>}
       </div>
       {errorMessage && <FormMessage>{errorMessage}</FormMessage>}
-      <Button
-        disabled={loading || !!errors.imgUrl || imgUrlValue.trim() === ""}
-      >
-        Get Image
-      </Button>
     </form>
   );
 }

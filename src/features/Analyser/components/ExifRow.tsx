@@ -23,7 +23,7 @@ export default function ExifRow({
   }
 
   return (
-    <li className="flex justify-between items-center py-xs">
+    <li className="flex justify-between items-center py-xs border-t border-t-outline dark:text-foreground-secondary">
       <span>{label}</span>
       <span>{display}</span>
     </li>

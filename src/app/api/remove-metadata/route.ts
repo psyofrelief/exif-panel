@@ -10,7 +10,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    // Convert uploaded file → Node Buffer
+    // Convert uploaded file -> Node Buffer
     const array = await file.arrayBuffer();
     const buffer = Buffer.from(array);
 
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
         );
     }
 
-    // Convert Buffer → ArrayBuffer (what NextResponse expects)
+    // Convert Buffer -> ArrayBuffer (what NextResponse expects)
     const ab = cleaned.buffer.slice(
       cleaned.byteOffset,
       cleaned.byteOffset + cleaned.byteLength

@@ -6,8 +6,6 @@ interface Props {
 }
 export default function FormMessage({ className = "", children }: Props) {
   return (
-    <p className={cn("text-xs text-foreground-destructive", className)}>
-      {children}
-    </p>
+    <p className={cn("text-xs text-destructive", className)}>{children}</p>
   );
 }

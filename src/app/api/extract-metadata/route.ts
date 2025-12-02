@@ -73,11 +73,19 @@ export async function POST(req: Request) {
     Width: metadata?.ExifImageWidth ?? metadata?.ImageWidth ?? null,
     Height: metadata?.ExifImageHeight ?? metadata?.ImageHeight ?? null,
     FNumber: metadata?.FNumber ?? null,
+    Flash: metadata?.Flash ?? null,
+    MeteringMode: metadata?.MeteringMode ?? null,
+    ExposureMode: metadata?.ExposureMode ?? null,
+    FocalLength: metadata?.FocalLength ?? null,
+    ExposureTime: metadata?.ExposureTime ?? null,
     ISO: metadata?.ISO ?? null,
     LensModel: metadata?.LensModel ?? null,
     CameraMake: metadata?.Make ?? null,
     CameraModel: metadata?.Model ?? null,
     DateTimeOriginal: metadata?.DateTimeOriginal ?? null,
+    GPSLatitude: metadata?.GPSLatitude ?? null,
+    GPSLongitude: metadata?.GPSLongitude ?? null,
+    GPSAltitude: metadata?.GPSAltitude ?? null,
   };
 
   // IPTC safe formatting

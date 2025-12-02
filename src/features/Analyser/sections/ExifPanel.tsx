@@ -1,7 +1,6 @@
 import Panel from "@/components/shared/Panel";
 import Button from "@/components/ui/Button";
 import { useAnalyserContext } from "@/contexts/analyserContext";
-import { useExtractMetadata } from "@/features/Analyser/hooks/useExtractMetadata";
 import { useEffect } from "react";
 import ExifRow from "../components/ExifRow";
 import { formatValue } from "../utils/format";
@@ -9,18 +8,16 @@ import { EXIF_GROUPS } from "../constants/exif";
 import { downloadExifJSON } from "../utils/exportExif";
 import { hasMeaningfulExif } from "../utils/hasMeaningfulExif";
 import { useRemoveMetadata } from "../hooks/useRemoveMetadata";
+import Heading from "@/components/ui/Heading";
+import Header from "../components/Header";
+import RawDataRow from "../components/RawDataRow";
 
 export default function ExifPanel() {
   const { metadata, file, error } = useAnalyserContext();
   const { exif, rawExif, iptc, xmp } = metadata;
   const meaningful = hasMeaningfulExif(exif);
 
-  const extract = useExtractMetadata();
   const stripAndDownload = useRemoveMetadata();
-
-  const handleExtract = async () => {
-    await extract();
-  };
 
   const handleDownloadExif = () => {
     if (!rawExif) return;
@@ -32,46 +29,46 @@ export default function ExifPanel() {
   }, [metadata]);
 
   return (
-    <Panel className="border-r size-full  col-span-2">
-      <Button type="button" onClick={handleExtract}>
-        Extract
-      </Button>
-      <Button type="button" onClick={handleDownloadExif} className="mb-md">
-        Download Raw EXIF
-      </Button>
+    <Panel className="border-r size-full">
+      <Header
+        heading="Exif Data / Camera"
+        buttonLabel="Download Raw EXIF"
+        onClickAction={handleDownloadExif}
+      />
       {file && !hasMeaningfulExif(exif) && !error && (
         <p className="my-md">No EXIF data found for this image.</p>
       )}
-      {EXIF_GROUPS.map((group) => (
-        <div key={group.title} className="mb-lg">
-          <h3 className="mb-sm font-semibold">{group.title}</h3>
-          <ul className="space-y-xs">
-            {group.fields.map(({ label, key, format }) => (
-              <ExifRow
-                key={key}
-                label={label}
-                value={meaningful ? formatValue(exif?.[key], format) : null}
-              />
-            ))}
-          </ul>
-        </div>
-      ))}
-
-      <p className="my-lg">RAW EXIF</p>
+      <div className="flex flex-col gap-y-lg">
+        {EXIF_GROUPS.map((group) => (
+          <div key={group.title} className="flex flex-col gap-y-xs">
+            <Heading size="small">{group.title}</Heading>
+            <ul>
+              {group.fields.map(({ label, key, format }) => (
+                <ExifRow
+                  key={key}
+                  label={label}
+                  value={meaningful ? formatValue(exif?.[key], format) : null}
+                />
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div className="bg-popover p-md flex justify-between items-center text-md rounded">
+        <p>Raw Exif</p>
+        <p>+</p>
+      </div>
       <ul className="mt-md border-t pt-md">
         {hasMeaningfulExif(exif) &&
           rawExif &&
-          Object.entries(rawExif).map(([key, value]) => {
+          Object.entries(rawExif).map(([key, value], idx) => {
             if (typeof value === "object" && value !== null) return null;
 
             const display = formatValue(value);
             if (display === "") return null;
 
             return (
-              <li key={key} className="flex justify-between">
-                <span className="font-medium">{key}</span>
-                <span>{display}</span>
-              </li>
+              <RawDataRow key={key} value={key} display={display} idx={idx} />
             );
           })}
       </ul>
@@ -80,14 +77,11 @@ export default function ExifPanel() {
       <ul className="mt-md border-t pt-md">
         {hasMeaningfulExif(exif) &&
           iptc &&
-          Object.entries(iptc).map(([key, value]) => {
+          Object.entries(iptc).map(([key, value], idx) => {
             const display = formatValue(value);
             if (display === "") return null;
             return (
-              <li key={key} className="flex justify-between">
-                <span className="font-medium">{key}</span>
-                <span>{display}</span>
-              </li>
+              <RawDataRow key={key} value={key} display={display} idx={idx} />
             );
           })}
       </ul>
@@ -96,13 +90,9 @@ export default function ExifPanel() {
       <ul className="mt-md border-t pt-md">
         {hasMeaningfulExif(exif) &&
           xmp &&
-          file &&
-          Object.entries(xmp).map(([key, value]) => {
+          Object.entries(xmp).map(([key, value], idx) => {
             return (
-              <li key={key} className="flex justify-between">
-                <span className="font-medium">{key}</span>
-                <span>{formatValue(value)}</span>
-              </li>
+              <RawDataRow key={key} value={key} display={value} idx={idx} />
             );
           })}
       </ul>

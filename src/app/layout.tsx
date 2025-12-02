@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/navbar/Navbar";
-import Footer from "@/components/layout/footer/Footer";
 import { AnalyserProvider } from "@/contexts/analyserContext";
 
-const robotoSans = Roboto({
-  variable: "--font-roboto-sans",
+const archivoSans = Archivo({
+  variable: "--font-archivo-sans",
   subsets: ["latin"],
 });
 
@@ -21,12 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${robotoSans.variable} antialiased`}>
+    <html lang="en" data-theme="dark">
+      <body
+        className={`${archivoSans.variable} antialiased text-foreground bg-background`}
+      >
         <AnalyserProvider>
           <Navbar />
           {children}
-          <Footer />
         </AnalyserProvider>
       </body>
     </html>

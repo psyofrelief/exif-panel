@@ -16,7 +16,7 @@ export default function SampleImage({
       height={256}
       src={url}
       alt={`Sample Photo ${idx}`}
-      className="aspect-square"
+      className="aspect-square rounded-xs"
       onClick={() => {
         setImageUrl(url);
         setFile(null);

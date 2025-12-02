@@ -1,12 +1,12 @@
 import Panel from "@/components/shared/Panel";
-import Input from "@/components/ui/Input";
 import { useAnalyserContext } from "@/contexts/analyserContext";
-import Image from "next/image";
 import UploadForm from "../forms/uploadForm";
 import { useEffect } from "react";
 import { useExtractMetadata } from "../hooks/useExtractMetadata";
 import { samples } from "../constants/samples";
 import SampleImage from "../components/SampleImage";
+import UploadImage from "../components/UploadImage";
+import SimpleDivider from "@/components/ui/SimpleDivider";
 
 export default function ImagePanel() {
   const { setFile, file, setImageUrl, imageUrl, error, setError, blobUrl } =
@@ -42,34 +42,19 @@ export default function ImagePanel() {
 
   //TODO: render supported image formats
   return (
-    <Panel className="border-r gap-lg size-full  col-span-3  items-center">
-      <Input
-        type="file"
-        onChange={(e) => {
-          setFile(e.target.files?.[0] ?? null);
-          setImageUrl("");
-        }}
-      />
-      {file && blobUrl && !error && (
-        <Image alt="image" height={256} width={256} src={blobUrl} />
-      )}
-
-      {imageUrl && !error && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={imageUrl}
-          alt="preview"
-          className="h-64 w-64 object-cover"
-          onError={() => setError("Couldn't load image")}
-        />
-      )}
+    <Panel className="border-r gap-lg size-full items-center px-md">
+      <UploadImage />
       <UploadForm />
 
       {error && <div className="text-red-600 text-sm mt-md">{error}</div>}
-      <div className="grid grid-cols-4 gap-sm">
-        {samples.slice(0, 4).map((val, idx) => (
-          <SampleImage url={val} idx={idx} key={idx} />
-        ))}
+      <SimpleDivider label="OR" />
+      <div className="flex flex-col gap-y-sm items-center">
+        <p>Use a sample photo</p>
+        <div className="grid xl:grid-cols-4 xl:grid-rows-1 grid-cols-2 grid-rows-2 gap-sm">
+          {samples.slice(0, 4).map((val, idx) => (
+            <SampleImage url={val} idx={idx} key={idx} />
+          ))}
+        </div>
       </div>
     </Panel>
   );

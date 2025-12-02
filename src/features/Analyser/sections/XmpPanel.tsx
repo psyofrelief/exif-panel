@@ -2,8 +2,9 @@ import Panel from "@/components/shared/Panel";
 import { useAnalyserContext } from "@/contexts/analyserContext";
 import XmpSliderRow from "../components/XmpSliderRow";
 import { XMP_GROUPS, XMP_SLIDERS, XMP_SLIDER_STYLES } from "../constants/xmp";
-import Button from "@/components/ui/Button";
 import { buildXmpPreset, downloadXmp } from "../utils/exportXmp";
+import Header from "../components/Header";
+import Heading from "@/components/ui/Heading";
 
 export default function IllustratorPanel() {
   const { metadata, file, error } = useAnalyserContext();
@@ -11,7 +12,7 @@ export default function IllustratorPanel() {
 
   const hasXmp = !!xmp && Object.keys(xmp).length > 0;
 
-  const handleDownload = () => {
+  const handleDownloadXmp = () => {
     if (xmp) {
       const preset = buildXmpPreset(xmp);
       downloadXmp("preset", preset);
@@ -19,20 +20,22 @@ export default function IllustratorPanel() {
   };
 
   return (
-    <Panel className="border-r size-full  col-span-2 p-md">
-      <Button onClick={handleDownload} className="mb-md">
-        Download XMP Preset
-      </Button>
+    <Panel className="border-r size-full p-md">
+      <Header
+        heading="Lightroom / XMP"
+        buttonLabel="Download XMP Preset"
+        onClickAction={handleDownloadXmp}
+      />
       {file && !hasXmp && !error && (
         <p className="mb-md text-sm text-muted-foreground">
           No XMP / Lightroom adjustments found for this image.
         </p>
       )}
       {XMP_GROUPS.map((group) => (
-        <div key={group.title} className="mb-xl">
-          <h3 className="font-semibold mb-sm">{group.title}</h3>
+        <div key={group.title} className="mb-xl flex flex-col gap-y-xs">
+          <Heading size="small">{group.title}</Heading>
 
-          <ul className="space-y-md">
+          <ul className="gap-y-sm">
             {group.keys.map((key) => {
               const slider = XMP_SLIDERS.find((s) => s.key === key);
               if (!slider) return null;

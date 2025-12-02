@@ -10,7 +10,6 @@ export const EXIF_GROUPS: {
       { label: "Make", key: "CameraMake" as keyof ExifData },
       { label: "Model", key: "CameraModel" as keyof ExifData },
       { label: "Lens", key: "LensModel" as keyof ExifData },
-      { label: "Software", key: "Software" as keyof ExifData },
     ],
   },
   {
@@ -20,7 +19,7 @@ export const EXIF_GROUPS: {
       { label: "Exposure Time", key: "ExposureTime" as keyof ExifData },
       { label: "ISO", key: "ISO" as keyof ExifData },
       { label: "Focal Length", key: "FocalLength" as keyof ExifData },
-      { label: "Exposure Program", key: "ExposureProgram" as keyof ExifData },
+      { label: "Exposure Mode", key: "ExposureMode" as keyof ExifData },
       { label: "Metering Mode", key: "MeteringMode" as keyof ExifData },
       { label: "Flash", key: "Flash" as keyof ExifData },
     ],

@@ -1,3 +1,4 @@
+import FaqSection from "@/components/sections/about/FaqSection";
 import FeaturesSection from "@/components/sections/about/FeaturesSection";
 import ProcessSection from "@/components/sections/about/ProcessSection";
 import SamplePhotosSection from "@/components/sections/about/SampePhotosSection";
@@ -8,6 +9,7 @@ export default function AboutPage() {
       <FeaturesSection />
       <SamplePhotosSection />
       <ProcessSection />
+      <FaqSection />
     </main>
   );
 }

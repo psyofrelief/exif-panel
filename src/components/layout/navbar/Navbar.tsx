@@ -15,7 +15,7 @@ export default function Navbar() {
           <div className="aspect-square h-10 rounded-xs bg-foreground/50" />
           <div className="aspect-square h-10 rounded-xs bg-foreground/25" />
         </div>
-        <ul className="flex items-center gap-x-md">
+        <ul className="md:flex hidden items-center gap-x-md">
           <NavLink label="About" href="/about" />
           <NavLink label="Sample Photos" href="/sample-photos" />
           <NavLink onClick={handleNavClick} label="FAQ" href="/about#faq" />

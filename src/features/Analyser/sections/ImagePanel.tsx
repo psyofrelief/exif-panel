@@ -50,7 +50,7 @@ export default function ImagePanel() {
       <SimpleDivider label="OR" />
       <div className="flex flex-col gap-y-sm items-center">
         <p>Use a sample photo</p>
-        <div className="grid xl:grid-cols-4 xl:grid-rows-1 grid-cols-2 grid-rows-2 gap-sm">
+        <div className="grid xl:grid-cols-4 xl:grid-rows-1 lg:grid-cols-2 lg:grid-rows-2 grid-cols-4 gap-sm">
           {samples.slice(0, 4).map((val, idx) => (
             <SampleImage url={val} idx={idx} key={idx} />
           ))}

@@ -70,7 +70,7 @@ export default function UploadForm() {
     >
       <div className="flex flex-col gap-xs">
         <FormLabel htmlFor="imgUrl">Image URL</FormLabel>
-        <div className="flex xl:flex-row flex-col items-center gap-sm">
+        <div className="flex xl:flex-row lg:flex-col sm:flex-row flex-col items-center gap-sm">
           <Input id="imgUrl" {...register("imgUrl")} placeholder="https://" />
           <Button
             disabled={loading || !!errors.imgUrl || imgUrlValue.trim() === ""}

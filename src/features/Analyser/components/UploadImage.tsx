@@ -38,7 +38,7 @@ export default function UploadImage() {
 
   return (
     <div
-      className={`relative p-sm bg-popover flex justify-center items-center rounded border border-dashed aspect-square w-full cursor-pointer select-none hover:border-foreground 
+      className={`relative p-sm bg-popover flex justify-center items-center rounded border border-dashed aspect-square lg:max-w-full md:max-w-[512px] w-full cursor-pointer select-none hover:border-foreground 
         ${dragActive ? "border-foreground bg-background" : "border-outline"}`}
       onClick={() => fileInputRef.current?.click()}
       onDragEnter={() => setDragActive(true)}

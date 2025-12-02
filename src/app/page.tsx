@@ -5,7 +5,7 @@ import ImagePanel from "@/features/Analyser/sections/ImagePanel";
 
 export default function Home() {
   return (
-    <div className="grid grid-cols-3 relative bg-background h-screen-minus-navbar overflow-clip">
+    <div className="grid grid-cols-3 relative bg-background h-screen-minus-navbar overflow-clip ">
       <ImagePanel />
       <XmpPanel />
       <IllustratorPanel />

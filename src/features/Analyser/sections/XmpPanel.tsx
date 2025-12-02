@@ -31,35 +31,39 @@ export default function IllustratorPanel() {
           No XMP / Lightroom adjustments found for this image.
         </p>
       )}
-      {XMP_GROUPS.map((group) => (
-        <div key={group.title} className="mb-xl flex flex-col gap-y-xs">
-          <Heading size="small">{group.title}</Heading>
 
-          <ul className="gap-y-sm">
-            {group.keys.map((key) => {
-              const slider = XMP_SLIDERS.find((s) => s.key === key);
-              if (!slider) return null;
+      <div className="flex flex-col gap-y-lg">
+        {XMP_GROUPS.map((group) => (
+          <div key={group.title} className="flex flex-col gap-y-xs">
+            <Heading size="small">{group.title}</Heading>
 
-              const raw = hasXmp ? xmp?.[key] : undefined;
-              const value = typeof raw === "number" ? raw : 0;
+            <ul className="gap-y-sm">
+              {group.keys.map((key) => {
+                const slider = XMP_SLIDERS.find((s) => s.key === key);
+                if (!slider) return null;
 
-              const track =
-                XMP_SLIDER_STYLES[key] ?? "linear-gradient(90deg, #ccc, #000)";
+                const raw = hasXmp ? xmp?.[key] : undefined;
+                const value = typeof raw === "number" ? raw : 0;
 
-              return (
-                <XmpSliderRow
-                  key={key}
-                  label={slider.label}
-                  value={value}
-                  min={slider.min}
-                  max={slider.max}
-                  track={track}
-                />
-              );
-            })}
-          </ul>
-        </div>
-      ))}
+                const track =
+                  XMP_SLIDER_STYLES[key] ??
+                  "linear-gradient(90deg, #ccc, #000)";
+
+                return (
+                  <XmpSliderRow
+                    key={key}
+                    label={slider.label}
+                    value={value}
+                    min={slider.min}
+                    max={slider.max}
+                    track={track}
+                  />
+                );
+              })}
+            </ul>
+          </div>
+        ))}
+      </div>
     </Panel>
   );
 }

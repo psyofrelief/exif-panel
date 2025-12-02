@@ -12,7 +12,7 @@ export default function Header({
   onClickAction: () => void;
 }) {
   return (
-    <header className="flex gap-x-sm justify-between items-center bor border-b-outline pb-md mb-md">
+    <header className="flex gap-x-sm justify-between items-center">
       <Heading>{heading}</Heading>
       <Button variant="secondary" onClick={onClickAction}>
         {buttonLabel}

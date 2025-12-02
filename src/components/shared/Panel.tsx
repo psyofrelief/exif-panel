@@ -5,7 +5,7 @@ export default function Panel({ children, className = "" }: BaseProps) {
   return (
     <section
       className={cn(
-        "flex flex-col p-md border-r border-r-outline max-h-screen-minus-navbar overflow-y-scroll",
+        "flex flex-col p-md border-r border-r-outline max-h-screen-minus-navbar overflow-y-scroll gap-y-lg",
         className
       )}
     >

@@ -42,7 +42,7 @@ export default function ImagePanel() {
 
   //TODO: render supported image formats
   return (
-    <Panel className="border-r gap-lg size-full items-center px-md">
+    <Panel className="border-r items-center">
       <UploadImage />
       <UploadForm />
 

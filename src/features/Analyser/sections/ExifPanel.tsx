@@ -10,11 +10,11 @@ import { hasMeaningfulExif } from "../utils/hasMeaningfulExif";
 import { useRemoveMetadata } from "../hooks/useRemoveMetadata";
 import Heading from "@/components/ui/Heading";
 import Header from "../components/Header";
-import RawDataRow from "../components/RawDataRow";
+import RawDataAccordion from "../components/RawDataAccordion";
 
 export default function ExifPanel() {
   const { metadata, file, error } = useAnalyserContext();
-  const { exif, rawExif, iptc, xmp } = metadata;
+  const { exif, rawExif } = metadata;
   const meaningful = hasMeaningfulExif(exif);
 
   const stripAndDownload = useRemoveMetadata();
@@ -29,7 +29,7 @@ export default function ExifPanel() {
   }, [metadata]);
 
   return (
-    <Panel className="border-r size-full">
+    <Panel className="border-r">
       <Header
         heading="Exif Data / Camera"
         buttonLabel="Download Raw EXIF"
@@ -54,51 +54,12 @@ export default function ExifPanel() {
           </div>
         ))}
       </div>
-      <div className="bg-popover p-md flex justify-between items-center text-md rounded">
-        <p>Raw Exif</p>
-        <p>+</p>
+      <div className="flex flex-col gap-y-md">
+        <RawDataAccordion />
+        <Button onClick={() => stripAndDownload()} type="button">
+          Remove Metadata and Download Image
+        </Button>
       </div>
-      <ul className="mt-md border-t pt-md">
-        {hasMeaningfulExif(exif) &&
-          rawExif &&
-          Object.entries(rawExif).map(([key, value], idx) => {
-            if (typeof value === "object" && value !== null) return null;
-
-            const display = formatValue(value);
-            if (display === "") return null;
-
-            return (
-              <RawDataRow key={key} value={key} display={display} idx={idx} />
-            );
-          })}
-      </ul>
-
-      <p className="my-lg">IPTC</p>
-      <ul className="mt-md border-t pt-md">
-        {hasMeaningfulExif(exif) &&
-          iptc &&
-          Object.entries(iptc).map(([key, value], idx) => {
-            const display = formatValue(value);
-            if (display === "") return null;
-            return (
-              <RawDataRow key={key} value={key} display={display} idx={idx} />
-            );
-          })}
-      </ul>
-
-      <p className="my-lg">RAW XMP</p>
-      <ul className="mt-md border-t pt-md">
-        {hasMeaningfulExif(exif) &&
-          xmp &&
-          Object.entries(xmp).map(([key, value], idx) => {
-            return (
-              <RawDataRow key={key} value={key} display={value} idx={idx} />
-            );
-          })}
-      </ul>
-      <Button onClick={() => stripAndDownload()} type="button">
-        Remove Metadata and Download Image
-      </Button>
     </Panel>
   );
 }

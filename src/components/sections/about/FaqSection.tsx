@@ -10,6 +10,7 @@ export default function FaqSection() {
         <header className="flex flex-col gap-y-sm">
           <Heading size="large">Frequently Asked Questions</Heading>
           <StaggeredText
+            as="h2"
             text="// Definitely didn't make these up"
             className="uppercase font-mono text-foreground-secondary"
           />

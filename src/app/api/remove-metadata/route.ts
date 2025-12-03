@@ -30,6 +30,9 @@ export async function POST(req: Request) {
       case "webp":
         cleaned = await input.webp({ quality: 100 }).toBuffer();
         break;
+      case "tiff":
+        cleaned = await input.tiff().toBuffer();
+        break;
       default:
         return NextResponse.json(
           { error: "Unsupported image type" },
@@ -41,9 +44,8 @@ export async function POST(req: Request) {
     const ab = cleaned.buffer.slice(
       cleaned.byteOffset,
       cleaned.byteOffset + cleaned.byteLength
-    );
+    ) as ArrayBuffer;
 
-    //@ts-ignore
     return new NextResponse(ab, {
       status: 200,
       headers: {

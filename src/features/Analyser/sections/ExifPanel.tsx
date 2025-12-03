@@ -23,8 +23,9 @@ export default function ExifPanel() {
   const stripAndDownload = useRemoveMetadata();
 
   const handleDownloadExif = () => {
-    if (!rawExif) return;
-    downloadExifJSON(rawExif, "raw-exif.json");
+    if (meaningful) {
+      downloadExifJSON(rawExif, "raw-exif.json");
+    }
   };
 
   useEffect(() => {
@@ -38,7 +39,6 @@ export default function ExifPanel() {
         buttonLabel="Download Raw EXIF"
         onClickAction={handleDownloadExif}
       />
-      {/* @ts-ignore */}
       {fileUploaded && !meaningful && (
         <WarningPanel
           label="No EXIF data found for this image"

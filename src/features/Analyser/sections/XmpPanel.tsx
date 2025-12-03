@@ -16,7 +16,7 @@ export default function IllustratorPanel() {
   const fileUploaded = !error && file;
 
   const handleDownloadXmp = () => {
-    if (xmp) {
+    if (hasXmp) {
       const preset = buildXmpPreset(xmp);
       downloadXmp("preset", preset);
     }

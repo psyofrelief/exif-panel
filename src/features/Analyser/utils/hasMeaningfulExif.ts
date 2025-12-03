@@ -12,9 +12,8 @@ const MEANINGFUL_EXIF_KEYS = [
 ];
 
 export function hasMeaningfulExif(
-  exif: Record<string, null> | null | undefined
+  exif: Record<string, string | number | null> | null | undefined
 ) {
-  console.log("Checking meaningful EXIF for:", exif);
   if (!exif) return false;
 
   return MEANINGFUL_EXIF_KEYS.some((key) => {

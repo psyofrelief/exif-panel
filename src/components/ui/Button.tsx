@@ -21,7 +21,7 @@ export default function Button({
     <button
       type={type}
       className={cn(
-        "flex items-center gap-x-xs cursor-pointer justify-center uppercase whitespace-nowrap px-sm py-xs rounded  text-sm bg-primary text-primary-foreground font-mono disabled:opacity-75 disabled:cursor-not-allowed",
+        "flex items-center gap-x-xs cursor-pointer justify-center uppercase whitespace-nowrap px-sm py-xs rounded text-sm bg-primary text-primary-foreground font-mono disabled:opacity-75 disabled:cursor-not-allowed",
         variant === "primary"
           ? "bg-primary text-primary-foreground hover:bg-primary/75 transition-colors"
           : "bg-popover text-popover-foreground outline outline-outline hover:bg-primary/8 transition-colors",

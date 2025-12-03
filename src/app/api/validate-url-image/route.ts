@@ -31,7 +31,10 @@ export async function POST(req: Request) {
       }
 
       const contentType = res.headers.get("content-type") ?? "";
-      const isImage = ALLOWED_TYPES.some((t) => contentType.includes(t));
+      // Ensure content type from URL headers is also checked robustly
+      const isImage = ALLOWED_TYPES.some((t) =>
+        contentType.toLowerCase().includes(t)
+      );
 
       if (!isImage) {
         return NextResponse.json(
@@ -45,20 +48,27 @@ export async function POST(req: Request) {
 
     // Handle uploaded file case
     if (file) {
-      if (!ALLOWED_TYPES.includes(file.type)) {
+      // 1. Check for empty file size first.
+      if (file.size === 0) {
+        return NextResponse.json({ error: "File is empty" }, { status: 400 });
+      }
+
+      // Safely access and sanitize file type, ensuring it is trimmed and lowercase for validation.
+      const rawFileType = file.type || "";
+      const sanitizedFileType = rawFileType.trim().toLowerCase();
+
+      // 2. Check the file type.
+      if (!ALLOWED_TYPES.includes(sanitizedFileType)) {
         return NextResponse.json(
           { error: "Unsupported file type" },
           { status: 400 }
         );
       }
 
-      if (file.size === 0) {
-        return NextResponse.json({ error: "File is empty" }, { status: 400 });
-      }
-
       return NextResponse.json({
         ok: true,
         type: "file",
+        // Return the original file type, but validation used the sanitized version
         contentType: file.type,
       });
     }

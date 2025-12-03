@@ -6,6 +6,13 @@ interface Props {
 }
 export default function FormMessage({ className = "", children }: Props) {
   return (
-    <p className={cn("text-xs text-destructive", className)}>{children}</p>
+    <p
+      className={cn(
+        "text-xs bg-destructive/50 w-fit py-1 px-2 rounded-[2px]",
+        className
+      )}
+    >
+      {children}
+    </p>
   );
 }

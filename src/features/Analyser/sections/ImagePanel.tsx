@@ -44,8 +44,10 @@ export default function ImagePanel() {
     <Panel className="border-r items-center">
       <UploadImage />
       <UploadForm />
-
-      {error && <div className="text-destructive mt-md">{error}</div>}
+      {/* 
+      {error && (
+        <div className="bg-destructive text-foreground mt-md">{error}</div>
+      )} */}
       <SimpleDivider label="OR" />
       <div className="flex flex-col gap-y-sm items-center">
         <p>Use a sample photo</p>

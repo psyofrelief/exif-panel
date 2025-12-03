@@ -58,8 +58,18 @@ export default function UploadForm() {
       setErrorMessage(null);
       reset();
     } else {
-      setErrorMessage(data.error ?? "Something went wrong");
-      return;
+      const errorMsg = data.error ?? "Something went wrong";
+      setErrorMessage(errorMsg);
+
+      setTimeout(() => {
+        setErrorMessage((currentMessage) => {
+          if (currentMessage === errorMsg) {
+            return null;
+          }
+          return currentMessage;
+        });
+      }, 5000);
+      // ----------------------------------------------------------------------
     }
   };
 
@@ -73,7 +83,8 @@ export default function UploadForm() {
         <div className="flex xl:flex-row lg:flex-col sm:flex-row flex-col items-center gap-sm">
           <Input id="imgUrl" {...register("imgUrl")} placeholder="https://" />
           <Button
-            disabled={loading || !!errors.imgUrl || imgUrlValue.trim() === ""}
+            type="submit"
+            disabled={loading || imgUrlValue.trim() === ""}
             className="xl:w-fit w-full"
           >
             Get Image

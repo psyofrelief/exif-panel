@@ -24,6 +24,8 @@
     --muted: hsl(28 3% 35%);
 
     --destructive: hsl(0 100% 60%);
+    --warning: hsl(57 85% 84%);
+    --warning-foreground: hsl(57 50% 15%);
   }
 }
 
@@ -45,6 +47,8 @@
   --color-muted: var(--muted);
 
   --color-destructive: var(--destructive);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;

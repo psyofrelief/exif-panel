@@ -11,6 +11,7 @@ import { useRemoveMetadata } from "../hooks/useRemoveMetadata";
 import Heading from "@/components/ui/Heading";
 import Header from "../components/Header";
 import RawDataAccordion from "../components/RawDataAccordion";
+import WarningPanel from "../components/WarningPanel";
 
 export default function ExifPanel() {
   const { metadata, file, error } = useAnalyserContext();
@@ -37,7 +38,10 @@ export default function ExifPanel() {
       />
       {/* @ts-ignore */}
       {file && !hasMeaningfulExif(exif) && !error && (
-        <p className="my-md">No EXIF data found for this image.</p>
+        <WarningPanel
+          label="No EXIF data found for this image"
+          content="This file does not have EXIF metadata. It may have been stripped or the camera did not include it."
+        />
       )}
       <div className="flex flex-col gap-y-lg">
         {EXIF_GROUPS.map((group) => (

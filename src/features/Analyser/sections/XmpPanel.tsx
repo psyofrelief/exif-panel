@@ -5,6 +5,7 @@ import { XMP_GROUPS, XMP_SLIDERS, XMP_SLIDER_STYLES } from "../constants/xmp";
 import { buildXmpPreset, downloadXmp } from "../utils/exportXmp";
 import Header from "../components/Header";
 import Heading from "@/components/ui/Heading";
+import WarningPanel from "../components/WarningPanel";
 
 export default function IllustratorPanel() {
   const { metadata, file, error } = useAnalyserContext();
@@ -27,9 +28,11 @@ export default function IllustratorPanel() {
         onClickAction={handleDownloadXmp}
       />
       {file && !hasXmp && !error && (
-        <p className="mb-md text-sm text-muted-foreground">
-          No XMP / Lightroom adjustments found for this image.
-        </p>
+        <WarningPanel
+          label="
+          No XMP / Lightroom data found for this image"
+          content="This file does not have XMP metadata. It may have been stripped or this file was not edited in Lightroom."
+        />
       )}
 
       <div className="flex flex-col gap-y-lg">

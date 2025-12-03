@@ -29,7 +29,11 @@ export default function Menu() {
         Menu
       </DrawerTrigger>
       <DrawerContent>
-        <MenuNavLink onClick={closeDrawer} label="About" href="/about" />
+        <MenuNavLink
+          onClick={closeDrawer}
+          label="About ExifPanel"
+          href="/about"
+        />
         <MenuNavLink
           onClick={closeDrawer}
           label="Sample Photos"

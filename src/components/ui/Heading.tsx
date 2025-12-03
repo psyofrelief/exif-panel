@@ -20,7 +20,7 @@ export default function Heading({
         size === "normal" && "text-md",
         "leading-tight font-sans",
         size === "small" &&
-          "text-xs sm:text-sm font-mono uppercase text-foreground",
+          "text-xs sm:text-sm font-mono uppercase text-foreground-secondary",
         className
       )}
     >

@@ -9,7 +9,6 @@ export default function FeaturesSection() {
       <div className="flex flex-col gap-y-md lg:gap-y-xl max-w-fit">
         <header className="flex flex-col gap-y-sm">
           <StaggeredText
-            as="h2"
             text="// Some Features"
             className="uppercase font-mono text-foreground-secondary"
           />

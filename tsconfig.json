@@ -2,8 +2,6 @@
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["reflect-metadata", "jest", "node"],
-    "typeRoots": ["./types", "./node_modules/@types"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -30,9 +28,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts",
-    "jest.setup.js",
-    "**/*.test.ts"
+    "**/*.mts"
   ],
   "exclude": ["node_modules"]
 }

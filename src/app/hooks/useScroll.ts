@@ -21,7 +21,7 @@ export function useHandleScroll(): (id: string) => void {
       const section = document.getElementById(id);
       if (section) {
         const targetOffset = section.offsetTop;
-        spring.set(window.scrollY);
+        spring.set(window.scrollY, false);
         setTimeout(() => {
           spring.set(targetOffset);
         }, 0);

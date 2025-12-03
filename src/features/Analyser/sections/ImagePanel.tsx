@@ -38,7 +38,6 @@ export default function ImagePanel() {
     if (imageUrl && !error) {
       handleExtract();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file, imageUrl]);
 
   return (

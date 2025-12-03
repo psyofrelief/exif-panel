@@ -11,7 +11,6 @@ export default function ProcessSection() {
       <div className="flex md:flex-row flex-col gap-md xl:gap-lg w-full">
         <div className="flex flex-col gap-y-xs max-w-[512px] justify-between">
           <StaggeredText
-            as="h2"
             text="// The Process"
             className="uppercase font-mono text-foreground-secondary"
           />

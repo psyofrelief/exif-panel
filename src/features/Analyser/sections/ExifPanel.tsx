@@ -18,6 +18,8 @@ export default function ExifPanel() {
   const { exif, rawExif } = metadata;
   const meaningful = hasMeaningfulExif(exif);
 
+  const fileUploaded = !error && file;
+
   const stripAndDownload = useRemoveMetadata();
 
   const handleDownloadExif = () => {
@@ -30,20 +32,28 @@ export default function ExifPanel() {
   }, [metadata]);
 
   return (
-    <Panel className="border-r">
+    <Panel
+      className={`border-r ${
+        fileUploaded && !meaningful && "overflow-y-clip!"
+      }`}
+    >
       <Header
         heading="Exif Data / Camera"
         buttonLabel="Download Raw EXIF"
         onClickAction={handleDownloadExif}
       />
       {/* @ts-ignore */}
-      {file && !hasMeaningfulExif(exif) && !error && (
+      {fileUploaded && !meaningful && (
         <WarningPanel
           label="No EXIF data found for this image"
           content="This file does not have EXIF metadata. It may have been stripped or the camera did not include it."
         />
       )}
-      <div className="flex flex-col gap-y-lg">
+      <div
+        className={`flex flex-col gap-y-lg ${
+          fileUploaded && !meaningful && "opacity-50"
+        }`}
+      >
         {EXIF_GROUPS.map((group) => (
           <div key={group.title} className="flex flex-col gap-y-xs">
             <Heading size="small">{group.title}</Heading>

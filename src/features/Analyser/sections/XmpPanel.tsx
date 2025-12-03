@@ -13,6 +13,8 @@ export default function IllustratorPanel() {
 
   const hasXmp = !!xmp && Object.keys(xmp).length > 0;
 
+  const fileUploaded = !error && file;
+
   const handleDownloadXmp = () => {
     if (xmp) {
       const preset = buildXmpPreset(xmp);
@@ -21,13 +23,15 @@ export default function IllustratorPanel() {
   };
 
   return (
-    <Panel className="border-r size-full p-md">
+    <Panel
+      className={`border-r ${fileUploaded && !hasXmp && "overflow-y-clip!"}`}
+    >
       <Header
         heading="Lightroom / XMP"
         buttonLabel="Download XMP Preset"
         onClickAction={handleDownloadXmp}
       />
-      {file && !hasXmp && !error && (
+      {fileUploaded && !hasXmp && (
         <WarningPanel
           label="
           No XMP / Lightroom data found for this image"
@@ -35,7 +39,11 @@ export default function IllustratorPanel() {
         />
       )}
 
-      <div className="flex flex-col gap-y-lg">
+      <div
+        className={`flex flex-col gap-y-lg ${
+          fileUploaded && !hasXmp && "opacity-50"
+        }`}
+      >
         {XMP_GROUPS.map((group) => (
           <div key={group.title} className="flex flex-col gap-y-xs">
             <Heading size="small">{group.title}</Heading>

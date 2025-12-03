@@ -1,5 +1,6 @@
 import Card from "@/components/shared/Card";
 import Heading from "@/components/ui/Heading";
+import StaggeredText from "@/components/ui/StaggeredLetters";
 import { faqs } from "@/types/faq";
 
 export default function FaqSection() {
@@ -8,8 +9,10 @@ export default function FaqSection() {
       <div className="flex flex-col gap-y-md lg:gap-y-xl max-w-fit">
         <header className="flex flex-col gap-y-sm">
           <Heading size="large">Frequently Asked Questions</Heading>
-
-          <Heading size="small">{"// Definitely didn't make these up"}</Heading>
+          <StaggeredText
+            text="// Definitely didn't make these up"
+            className="uppercase font-mono text-foreground-secondary"
+          />
         </header>
         <div className="grid md:grid-cols-2 grid-rows-3 gap-xs">
           {faqs.map(({ label, content }) => (

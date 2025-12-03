@@ -18,9 +18,9 @@ export default function Heading({
       className={cn(
         size === "large" && "text-lg lg:text-xl",
         size === "normal" && "text-md",
-        "font-medium leading-tight font-sans",
+        "leading-tight font-sans",
         size === "small" &&
-          "text-xs sm:text-sm font-mono font-normal uppercase text-foreground-secondary",
+          "text-xs sm:text-sm font-mono uppercase text-foreground-secondary",
         className
       )}
     >

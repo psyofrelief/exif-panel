@@ -10,7 +10,7 @@ export default function NavLink({ label, href, onClick }: Props) {
   return (
     <li className="flex">
       <Link
-        className="flex-1 uppercase font-mono whitespace-nowrap"
+        className="flex-1 uppercase hover:text-foreground-secondary transition-colors font-mono whitespace-nowrap"
         href={href}
         onClick={onClick}
       >

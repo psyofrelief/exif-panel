@@ -14,6 +14,8 @@ export default function RawDataAccordion() {
   const { exif, rawExif, iptc, xmp } = metadata;
   const meaningful = hasMeaningfulExif(exif);
 
+  const hasXmp = !!xmp && Object.keys(xmp).length > 0;
+
   return (
     <Accordion
       type="single"
@@ -69,13 +71,15 @@ export default function RawDataAccordion() {
         <AccordionTrigger>Raw XMP Data</AccordionTrigger>
         <AccordionContent>
           <ul>
-            {meaningful &&
-              xmp &&
+            {meaningful && hasXmp ? (
               Object.entries(xmp).map(([key, value], idx) => {
                 return (
                   <RawDataRow key={key} value={key} display={value} idx={idx} />
                 );
-              })}
+              })
+            ) : (
+              <RawDataRow value="No XMP Data" idx={1} display={null} />
+            )}
           </ul>
         </AccordionContent>
       </AccordionItem>

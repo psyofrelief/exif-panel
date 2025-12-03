@@ -32,11 +32,7 @@ export default function ExifPanel() {
   }, [metadata]);
 
   return (
-    <Panel
-      className={`border-r ${
-        fileUploaded && !meaningful && "overflow-y-clip!"
-      }`}
-    >
+    <Panel className={`border-r ${!meaningful && "overflow-y-clip!"}`}>
       <Header
         heading="Exif Data / Camera"
         buttonLabel="Download Raw EXIF"
@@ -49,11 +45,7 @@ export default function ExifPanel() {
           content="This file does not have EXIF metadata. It may have been stripped or the camera did not include it."
         />
       )}
-      <div
-        className={`flex flex-col gap-y-lg ${
-          fileUploaded && !meaningful && "opacity-50"
-        }`}
-      >
+      <div className={`flex flex-col gap-y-lg ${!meaningful && "opacity-50"}`}>
         {EXIF_GROUPS.map((group) => (
           <div key={group.title} className="flex flex-col gap-y-xs">
             <Heading size="small">{group.title}</Heading>

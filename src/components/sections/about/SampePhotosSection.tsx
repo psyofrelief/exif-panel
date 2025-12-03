@@ -5,9 +5,9 @@ import Link from "next/link";
 
 export default function SamplePhotosSection() {
   return (
-    <div className="min-h-screen-minus-navbar flex justify-center items-center w-full">
+    <section className="sm:min-h-screen py-md flex justify-center items-center w-full">
       {/* Container */}
-      <div className="flex gap-xl flex-1 justify-center">
+      <div className="flex flex-col-reverse lg:flex-row gap-xl flex-1 justify-center">
         {/* Image - Left */}
         <div
           className={`relative p-sm bg-popover flex justify-center items-center rounded  aspect-square w-full cursor-pointer select-none `}
@@ -21,12 +21,12 @@ export default function SamplePhotosSection() {
           />
         </div>
         {/* Content - Right */}
-        <div className="flex flex-col gap-y-xs justify-between max-w-[470px]">
+        <div className="flex flex-col gap-y-sm md:gap-y-xs justify-between">
           <Heading size="large" className="max-w-[400px]">
             Learn From Sample Photos.
           </Heading>
           <div className="flex flex-col gap-y-md mt-auto">
-            <p className="max-w-[900px]">
+            <p className="md:max-w-[900px]">
               Explore our curated gallery of sample photos with complete
               Lightroom edits and camera settings. Download settings as presets
               and apply them to your own photos.
@@ -38,6 +38,6 @@ export default function SamplePhotosSection() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

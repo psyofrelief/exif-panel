@@ -40,13 +40,12 @@ export default function ImagePanel() {
     }
   }, [file, imageUrl]);
 
-  //TODO: render supported image formats
   return (
     <Panel className="border-r items-center">
       <UploadImage />
       <UploadForm />
 
-      {error && <div className="text-red-600 text-sm mt-md">{error}</div>}
+      {error && <div className="text-destructive mt-md">{error}</div>}
       <SimpleDivider label="OR" />
       <div className="flex flex-col gap-y-sm items-center">
         <p>Use a sample photo</p>

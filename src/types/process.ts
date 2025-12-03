@@ -9,7 +9,7 @@ export const processSteps: ProcessStep[] = [
     id: 1,
     title: "Upload a Photo",
     description:
-      "Choose a photo from your device or paste a URL. Supported formats include JPEG, PNG, TIFF, and WebP.",
+      "Choose a photo directly from your device, or simply paste a URL. Supported formats currently are JPEG, PNG, TIFF, and WebP.",
   },
   {
     id: 2,
@@ -27,6 +27,6 @@ export const processSteps: ProcessStep[] = [
     id: 4,
     title: "Download or Recreate",
     description:
-      "Save the metadata as a preset file or rebuild the look in Lightroom, Capture One, or your preferred editor.",
+      "Export the metadata as a dedicated preset file, or replicate the original adjustments in editing tools like Lightroom, Capture One, or your chosen editor.",
   },
 ];

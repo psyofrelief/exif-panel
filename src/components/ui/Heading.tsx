@@ -10,17 +10,21 @@ export default function Heading({
   className = "",
   size = "normal",
 }: Props) {
+  // Dynamically set the HTML tag based on the size prop
+  const Tag = size === "small" ? "h2" : "h1";
+
   return (
-    <h1
+    <Tag
       className={cn(
-        size === "large" && "text-xl",
+        size === "large" && "text-lg lg:text-xl",
         size === "normal" && "text-md",
         "font-medium leading-tight font-sans",
-        size === "small" && "text-sm font-mono font-normal uppercase",
+        size === "small" &&
+          "text-xs sm:text-sm font-mono font-normal uppercase text-foreground-secondary",
         className
       )}
     >
       {children}
-    </h1>
+    </Tag>
   );
 }

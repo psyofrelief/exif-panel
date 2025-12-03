@@ -3,25 +3,31 @@ import { cn } from "@/lib/utils";
 export default function Card({
   label,
   content,
+  icon,
   inverted = false,
 }: {
   label: string;
   content: string;
+  icon?: React.ReactNode;
   inverted?: boolean;
 }) {
   return (
     <li
       className={cn(
-        "rounded flex flex-col gap-y-xs p-lg",
+        "rounded text-start flex flex-col gap-y-xs p-lg",
         inverted
-          ? "bg-primary text-primary-foreground"
-          : "bg-popover text-popover-foreground"
+          ? "bg-popover text-popover-foreground"
+          : "bg-background border-outline border text-popover-foreground"
       )}
     >
-      <p className="font-medium uppercase font-mono">{label}</p>
+      {icon && <div className="mb-xs text-2xl">{icon}</div>}
+
+      <p className="uppercase font-mono">{label}</p>
       <p
         className={cn(
-          inverted ? "text-primary-foreground" : "text-foreground-secondary"
+          inverted
+            ? "text-popover-foreground-secondary"
+            : "text-foreground-secondary"
         )}
       >
         {content}

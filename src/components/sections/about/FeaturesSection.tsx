@@ -4,16 +4,15 @@ import { features } from "@/types/features";
 
 export default function FeaturesSection() {
   return (
-    <div className="min-h-screen-minus-navbar flex justify-center items-center ">
-      <div className="flex flex-col gap-y-xl max-w-fit items-center">
-        <Heading size="large">What Can You Do With ExifPanel?</Heading>
-
-        <p className="font-mono uppercase text-foreground-secondary">
-          {"// Some Features of this app"}
-        </p>
-        <div className="grid grid-cols-2 grid-rows-2 gap-xs">
-          {features.map(({ label, content }) => (
-            <Card label={label} content={content} key={label} />
+    <div className="min-h-screen-minus-navbar relative flex sm:justify-center items-center ">
+      <div className="flex flex-col gap-y-md lg:gap-y-xl max-w-fit">
+        <header className="flex flex-col gap-y-sm">
+          <Heading size="small">{"// Some features"}</Heading>
+          <Heading size="large">What Can You Do With ExifPanel?</Heading>
+        </header>
+        <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-xs">
+          {features.map(({ label, content, icon }) => (
+            <Card icon={icon} label={label} content={content} key={label} />
           ))}
         </div>
       </div>

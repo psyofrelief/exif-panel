@@ -21,7 +21,7 @@ export default function Navbar() {
           <NavLink onClick={handleNavClick} label="FAQ" href="/about#faq" />
         </ul>
       </div>
-      <Link href={"/"} className="flex">
+      <Link href={"/"} className="hidden md:flex">
         <Button className="flex-1">Open Tool</Button>
       </Link>
     </nav>

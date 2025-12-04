@@ -15,6 +15,7 @@ export default function RawDataAccordion() {
   const meaningful = hasMeaningfulExif(exif);
 
   const hasXmp = !!xmp && Object.keys(xmp).length > 0;
+  const hasIptc = !!iptc && Object.keys(iptc).length > 0;
 
   return (
     <Accordion
@@ -26,11 +27,9 @@ export default function RawDataAccordion() {
         <AccordionTrigger>IPTC Data</AccordionTrigger>
         <AccordionContent>
           <ul>
-            {meaningful &&
-              iptc &&
+            {hasIptc ? (
               Object.entries(iptc).map(([key, value], idx) => {
                 const display = formatValue(value);
-                if (display === "") return null;
                 return (
                   <RawDataRow
                     key={key}
@@ -39,7 +38,10 @@ export default function RawDataAccordion() {
                     idx={idx}
                   />
                 );
-              })}
+              })
+            ) : (
+              <RawDataRow value="No IPTC Data" idx={1} display={null} />
+            )}
           </ul>
         </AccordionContent>
       </AccordionItem>
@@ -71,7 +73,7 @@ export default function RawDataAccordion() {
         <AccordionTrigger>Raw XMP Data</AccordionTrigger>
         <AccordionContent>
           <ul>
-            {meaningful && hasXmp ? (
+            {hasXmp ? (
               Object.entries(xmp).map(([key, value], idx) => {
                 return (
                   <RawDataRow key={key} value={key} display={value} idx={idx} />

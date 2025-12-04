@@ -14,11 +14,11 @@ export default function FaqSection() {
             className="uppercase font-mono text-foreground-secondary"
           />
         </header>
-        <div className="grid md:grid-cols-2 grid-rows-3 gap-xs">
+        <ul className="grid md:grid-cols-2 grid-rows-3 gap-xs">
           {faqs.map(({ label, content }) => (
             <Card inverted label={label} content={content} key={label} />
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

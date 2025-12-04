@@ -37,14 +37,7 @@ export async function POST(req: Request) {
         );
     }
 
-    // Convert Buffer -> ArrayBuffer (what NextResponse expects)
-    const ab = cleaned.buffer.slice(
-      cleaned.byteOffset,
-      cleaned.byteOffset + cleaned.byteLength
-    );
-
-    //@ts-ignore
-    return new NextResponse(ab, {
+    return new NextResponse(new Uint8Array(cleaned), {
       status: 200,
       headers: {
         "Content-Type": file.type,

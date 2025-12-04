@@ -2,7 +2,7 @@
 
 import { useAnalyserContext } from "@/contexts/analyserContext";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form"; // Added useWatch
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import Input from "@/components/ui/Input";
@@ -27,7 +27,7 @@ export default function UploadForm() {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
+    control,
   } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,7 +35,11 @@ export default function UploadForm() {
     },
   });
 
-  const imgUrlValue = watch("imgUrl");
+  const imgUrlValue = useWatch({
+    control,
+    name: "imgUrl",
+    defaultValue: "",
+  });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setErrorMessage(null);
@@ -69,7 +73,6 @@ export default function UploadForm() {
           return currentMessage;
         });
       }, 5000);
-      // ----------------------------------------------------------------------
     }
   };
 

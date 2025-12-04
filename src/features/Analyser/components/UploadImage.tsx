@@ -38,7 +38,8 @@ export default function UploadImage() {
 
   return (
     <div
-      className={`relative p-sm bg-popover flex justify-center items-center rounded border border-dashed aspect-square lg:max-w-full md:max-w-[512px] w-full cursor-pointer select-none hover:border-foreground 
+      // Changed aspect-square to aspect-[3/2] to create a landscape rectangle container
+      className={`relative p-sm bg-popover flex justify-center items-center rounded border  border-outline aspect-3/2 lg:max-w-full md:max-w-[512px] w-full cursor-pointer select-none hover:border-foreground hover:border-dashed 
         ${dragActive ? "border-foreground bg-background" : "border-outline"}`}
       onClick={() => fileInputRef.current?.click()}
       onDragEnter={() => setDragActive(true)}
@@ -51,8 +52,8 @@ export default function UploadImage() {
           src={previewSrc}
           alt="Preview"
           fill
-          className="object-cover rounded"
-          sizes="256px"
+          className="object-contain rounded" // object-contain ensures the image fits inside the new rectangle without cropping
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       ) : (
         <div className="flex flex-col items-center gap-y-sm select-none">

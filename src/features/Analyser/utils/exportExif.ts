@@ -1,4 +1,4 @@
-export function downloadExifJSON(data: any, filename: string) {
+export function downloadExifJSON(data: unknown, filename: string) {
   const blob = new Blob([JSON.stringify(data, null, 2)], {
     type: "application/json",
   });

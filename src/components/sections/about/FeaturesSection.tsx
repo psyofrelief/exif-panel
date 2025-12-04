@@ -14,11 +14,11 @@ export default function FeaturesSection() {
           />
           <Heading size="large">What Can You Do With ExifPanel?</Heading>
         </header>
-        <div className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-xs">
+        <ul className="grid grid-cols-1 md:grid-cols-2 md:grid-rows-2 gap-xs">
           {features.map(({ label, content, icon }) => (
             <Card icon={icon} label={label} content={content} key={label} />
           ))}
-        </div>
+        </ul>
       </div>
     </div>
   );

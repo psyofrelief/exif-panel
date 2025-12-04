@@ -20,7 +20,7 @@ const ProcessStepComponent: React.FC<{ step: ProcessStep }> = ({ step }) => {
       {/* 2. Content Column (Right Side) */}
       <div className="flex flex-col pb-9">
         {/* Title */}
-        <h3 className="mb-xs uppercase font-mono">{step.title}</h3>
+        <p className="mb-xs uppercase font-mono">{step.title}</p>
         {/* Description */}
         <p className="leading-relaxed text-foreground-secondary max-w-[400px]">
           {step.description}

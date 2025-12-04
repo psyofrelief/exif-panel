@@ -21,9 +21,13 @@ export default function SampleImage({
       width={256}
       height={256}
       src={url}
+      priority
+      loading="eager"
       alt={`Sample Photo ${idx}`}
       className={cn(
-        "aspect-square rounded-xs hover:border-2 border-outline hover:opacity-75 cursor-pointer transition-all",
+        // Re-added aspect-square to force the container to be square, and added object-cover
+        // to ensure the image fills the entire area (cropping if necessary) and is centered.
+        "aspect-square object-cover rounded-xs hover:border-2 border-outline hover:opacity-75 cursor-pointer transition-all",
         gallery && "w-full"
       )}
       onClick={() => {

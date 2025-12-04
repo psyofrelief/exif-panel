@@ -1,7 +1,6 @@
 import Panel from "@/components/shared/Panel";
 import Button from "@/components/ui/Button";
 import { useAnalyserContext } from "@/contexts/analyserContext";
-import { useEffect } from "react";
 import ExifRow from "../components/ExifRow";
 import { formatValue } from "../utils/format";
 import { EXIF_GROUPS } from "../constants/exif";
@@ -23,13 +22,10 @@ export default function ExifPanel() {
   const stripAndDownload = useRemoveMetadata();
 
   const handleDownloadExif = () => {
-    if (!rawExif) return;
-    downloadExifJSON(rawExif, "raw-exif.json");
+    if (meaningful) {
+      downloadExifJSON(rawExif, "raw-exif.json");
+    }
   };
-
-  useEffect(() => {
-    if (metadata) console.log("Metadata updated in ExifPanel:", metadata);
-  }, [metadata]);
 
   return (
     <Panel className={`border-r ${!meaningful && "overflow-y-clip!"}`}>
@@ -38,8 +34,7 @@ export default function ExifPanel() {
         buttonLabel="Download Raw EXIF"
         onClickAction={handleDownloadExif}
       />
-      {/* @ts-ignore */}
-      {fileUploaded && !meaningful && (
+      {fileUploaded && !meaningful && exif && (
         <WarningPanel
           label="No EXIF data found for this image"
           content="This file does not have EXIF metadata. It may have been stripped or the camera did not include it."

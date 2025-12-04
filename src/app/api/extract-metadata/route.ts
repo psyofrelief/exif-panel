@@ -47,6 +47,7 @@ export async function POST(req: Request) {
   }
 
   // Parse EXIF safely
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let metadata: any = {};
   try {
     metadata =

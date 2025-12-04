@@ -7,7 +7,7 @@ interface SimpleDividerProps {
 
 export default function SimpleDivider({ label }: SimpleDividerProps) {
   return (
-    <div className="relative flex items-center justify-center w-full my-xl">
+    <div className="relative flex items-center justify-center w-full mt-auto">
       <div
         aria-hidden="true"
         className="absolute left-0 w-full h-px top-1/2 -translate-y-1/2 pointer-events-none z-0 

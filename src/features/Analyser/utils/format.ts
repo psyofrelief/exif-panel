@@ -16,7 +16,7 @@ export function formatValue(value: unknown, format?: string) {
   return String(value);
 }
 
-export function formatIptcValue(value: any) {
+export function formatIptcValue(value: string | number | null) {
   if (typeof value !== "string") return value;
 
   if (/^\d{8}$/.test(value)) {

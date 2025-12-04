@@ -14,8 +14,11 @@ export default function XmpSliderRow({ label, value, min, max, track }: Props) {
   return (
     <li className="flex flex-col gap-xs py-xs">
       <div className="flex items-center justify-between gap-x-md text-sm dark:text-foreground-secondary">
-        <span className="whitespace-nowrap min-w-[120px] ">{label}</span>
+        <label htmlFor={label} className="whitespace-nowrap min-w-[120px] ">
+          {label}
+        </label>
         <input
+          id={label}
           type="range"
           min={min}
           max={max}

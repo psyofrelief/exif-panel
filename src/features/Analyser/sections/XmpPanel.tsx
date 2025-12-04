@@ -8,15 +8,15 @@ import Heading from "@/components/ui/Heading";
 import WarningPanel from "../components/WarningPanel";
 
 export default function IllustratorPanel() {
-  const { metadata, file, error } = useAnalyserContext();
+  const { metadata, file, error, imageUrl } = useAnalyserContext();
   const xmp = metadata.xmp;
 
   const hasXmp = !!xmp && Object.keys(xmp).length > 0;
 
-  const fileUploaded = !error && file;
+  const fileUploaded = (!error && file) || (!error && imageUrl);
 
   const handleDownloadXmp = () => {
-    if (xmp) {
+    if (hasXmp) {
       const preset = buildXmpPreset(xmp);
       downloadXmp("preset", preset);
     }
@@ -29,7 +29,7 @@ export default function IllustratorPanel() {
         buttonLabel="Download XMP Preset"
         onClickAction={handleDownloadXmp}
       />
-      {fileUploaded && !hasXmp && (
+      {fileUploaded && xmp && !hasXmp && (
         <WarningPanel
           label="
           No XMP / Lightroom data found for this image"

@@ -11,9 +11,10 @@ import Heading from "@/components/ui/Heading";
 import Header from "../components/Header";
 import RawDataAccordion from "../components/RawDataAccordion";
 import WarningPanel from "../components/WarningPanel";
+import LoadingPanel from "@/components/ui/LoadingPanel";
 
 export default function ExifPanel() {
-  const { metadata, file, error } = useAnalyserContext();
+  const { metadata, file, error, extractionLoading } = useAnalyserContext();
   const { exif, rawExif } = metadata;
   const meaningful = hasMeaningfulExif(exif);
 
@@ -28,19 +29,24 @@ export default function ExifPanel() {
   };
 
   return (
-    <Panel className={`border-r ${!meaningful && "overflow-y-clip!"}`}>
+    <Panel
+      className={`border-r relative ${
+        (extractionLoading || !meaningful) && "overflow-y-clip!"
+      }`}
+    >
+      {(extractionLoading || !meaningful) && <LoadingPanel />}
       <Header
         heading="Exif Data / Camera"
         buttonLabel="Download Raw EXIF"
         onClickAction={handleDownloadExif}
       />
-      {fileUploaded && !meaningful && exif && (
+      {fileUploaded && !meaningful && exif && !extractionLoading && (
         <WarningPanel
           label="No EXIF data found for this image"
           content="This file does not have EXIF metadata. It may have been stripped or the camera did not include it."
         />
       )}
-      <div className={`flex flex-col gap-y-lg ${!meaningful && "opacity-50"}`}>
+      <div className={`flex flex-col gap-y-lg `}>
         {EXIF_GROUPS.map((group) => (
           <div key={group.title} className="flex flex-col gap-y-xs">
             <Heading size="small">{group.title}</Heading>

@@ -17,6 +17,9 @@ type AnalyserContextType = {
 
   metadata: ImageMetadata;
   setMetadata: React.Dispatch<React.SetStateAction<ImageMetadata>>;
+
+  extractionLoading: boolean;
+  setExtractionLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AnalyserContext = createContext<AnalyserContextType | null>(null);
@@ -25,6 +28,7 @@ export function AnalyserProvider({ children }: { children: ReactNode }) {
   const [file, setFile] = useState<File | null>(null);
   const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
+  const [extractionLoading, setExtractionLoading] = useState(false);
   const [metadata, setMetadata] = useState<ImageMetadata>({
     exif: null,
     xmp: null,
@@ -48,6 +52,8 @@ export function AnalyserProvider({ children }: { children: ReactNode }) {
     blobUrl,
     metadata,
     setMetadata,
+    extractionLoading,
+    setExtractionLoading,
   };
 
   return (

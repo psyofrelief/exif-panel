@@ -9,12 +9,21 @@ import UploadImage from "../components/UploadImage";
 import SimpleDivider from "@/components/ui/SimpleDivider";
 
 export default function ImagePanel() {
-  const { setFile, file, setImageUrl, imageUrl, error, setError, blobUrl } =
-    useAnalyserContext();
+  const {
+    setFile,
+    file,
+    setImageUrl,
+    imageUrl,
+    error,
+    setError,
+    blobUrl,
+    setExtractionLoading,
+  } = useAnalyserContext();
 
   const extract = useExtractMetadata();
 
   const handleExtract = async () => {
+    setExtractionLoading(true);
     try {
       await extract();
     } catch (err) {
@@ -23,6 +32,8 @@ export default function ImagePanel() {
       setError("Failed to extract metadata");
       console.error("Error:", err);
     }
+
+    setExtractionLoading(false);
   };
 
   useEffect(() => {

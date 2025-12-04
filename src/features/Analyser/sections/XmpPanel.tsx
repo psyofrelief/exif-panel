@@ -6,9 +6,11 @@ import { buildXmpPreset, downloadXmp } from "../utils/exportXmp";
 import Header from "../components/Header";
 import Heading from "@/components/ui/Heading";
 import WarningPanel from "../components/WarningPanel";
+import LoadingPanel from "@/components/ui/LoadingPanel";
 
 export default function IllustratorPanel() {
-  const { metadata, file, error, imageUrl } = useAnalyserContext();
+  const { metadata, file, error, imageUrl, extractionLoading } =
+    useAnalyserContext();
   const xmp = metadata.xmp;
 
   const hasXmp = !!xmp && Object.keys(xmp).length > 0;
@@ -23,13 +25,18 @@ export default function IllustratorPanel() {
   };
 
   return (
-    <Panel className={`border-r ${!hasXmp && "overflow-y-clip!"}`}>
+    <Panel
+      className={`border-r relative ${
+        (extractionLoading || !hasXmp) && "overflow-y-clip!"
+      }`}
+    >
+      {(extractionLoading || !hasXmp) && <LoadingPanel />}
       <Header
         heading="Lightroom / XMP"
         buttonLabel="Download XMP Preset"
         onClickAction={handleDownloadXmp}
       />
-      {fileUploaded && xmp && !hasXmp && (
+      {fileUploaded && xmp && !hasXmp && !extractionLoading && (
         <WarningPanel
           label="
           No XMP / Lightroom data found for this image"
@@ -37,7 +44,7 @@ export default function IllustratorPanel() {
         />
       )}
 
-      <div className={`flex flex-col gap-y-lg ${!hasXmp && "opacity-50"}`}>
+      <div className="flex flex-col gap-y-lg">
         {XMP_GROUPS.map((group) => (
           <div key={group.title} className="flex flex-col gap-y-xs">
             <Heading size="small">{group.title}</Heading>

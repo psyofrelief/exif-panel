@@ -9,7 +9,8 @@ export async function POST(req: Request) {
   let imageUrl = form.get("imageUrl") as string | null;
 
   if (imageUrl?.startsWith("/")) {
-    const base = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+    const base =
+      process.env.NEXT_PUBLIC_SITE_URL || "https://exif-panel.vercel.app";
     imageUrl = base + imageUrl;
   }
 

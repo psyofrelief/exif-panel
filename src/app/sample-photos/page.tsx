@@ -7,7 +7,7 @@ import { samplesGallery } from "@/features/Analyser/constants/samples";
 export default function SamplePhotosPage() {
   return (
     <>
-      <main className="flex-1 flex flex-col p-lg gap-y-lg min-h-screen">
+      <main className="flex-1 flex flex-col p-sm sm:p-lg gap-y-lg min-h-screen">
         <header className="flex flex-col gap-y-xs">
           <Heading size="large">Browse The Sample Photos.</Heading>
           <p>
@@ -16,7 +16,7 @@ export default function SamplePhotosPage() {
             them to your own photos.
           </p>
         </header>
-        <div className="grid gap-sm grid-cols-2 sm:grid-cols-4">
+        <div className="grid gap-xs md:gap-sm grid-cols-2 sm:grid-cols-4">
           {samplesGallery.map((val, idx) => (
             <SampleImage gallery url={val} idx={idx} key={idx} />
           ))}

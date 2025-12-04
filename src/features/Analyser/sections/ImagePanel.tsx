@@ -52,7 +52,7 @@ export default function ImagePanel() {
   }, [file, imageUrl]);
 
   return (
-    <Panel className="border-r items-center max-h-screen-minus-navbar">
+    <Panel className="border-r items-center">
       <UploadImage />
       <UploadForm />
       <SimpleDivider label="OR" />

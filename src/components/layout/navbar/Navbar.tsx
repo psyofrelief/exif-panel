@@ -10,7 +10,7 @@ export default function Navbar() {
   const handleNavClick = useNavClick();
 
   return (
-    <nav className="w-full flex justify-between py-sm px-md border-b bg-background  border-b-outline">
+    <nav className="w-full flex justify-between py-sm px-sm md:px-md border-b bg-background  border-b-outline">
       <div className="flex sm:hidden">
         <Menu />
       </div>

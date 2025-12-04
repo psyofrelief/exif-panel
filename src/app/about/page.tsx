@@ -8,7 +8,7 @@ import Divider from "@/components/ui/Divider";
 export default function AboutPage() {
   return (
     <>
-      <main className="flex-1 flex flex-col items-center justify-center p-lg sm:pt-0 pt-xl md:p-sm size-full mx-auto min-h-screen max-w-5xl">
+      <main className="flex-1 flex flex-col items-center justify-center p-sm sm:pt-0 pt-xl p-sm size-full mx-auto min-h-screen max-w-5xl">
         <FeaturesSection />
         <Divider />
         <SamplePhotosSection />

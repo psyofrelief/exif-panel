@@ -9,7 +9,7 @@ const archivoSans = Archivo({
   subsets: ["latin"],
 });
 
-export const applicationMetadata: Metadata = {
+export const metadata: Metadata = {
   title: "ExifPanel",
   description:
     "A free online tool to quickly analyse, view, and export EXIF and XMP metadata (Lightroom presets) from image files and remote URLs. Supports JPEG, PNG, WEBP, and more.",

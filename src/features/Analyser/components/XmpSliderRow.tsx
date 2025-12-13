@@ -26,7 +26,7 @@ export default function XmpSliderRow({ label, value, min, max, track }: Props) {
           readOnly
           className="w-full h-[4px]  rounded col-span-6 appearance-none"
           style={{
-            background: track,
+            background: track
           }}
         />
 

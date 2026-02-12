@@ -18,6 +18,7 @@ export default function ImagePanel() {
     setError,
     blobUrl,
     setExtractionLoading,
+    extractionLoading
   } = useAnalyserContext();
 
   const extract = useExtractMetadata();
@@ -58,7 +59,7 @@ export default function ImagePanel() {
       <SimpleDivider label="OR" />
       <div className="flex flex-col gap-y-sm items-center mt-auto">
         <p>Use a sample photo</p>
-        <div className="grid xl:grid-cols-4 xl:grid-rows-1 md:grid-cols-4 md:grid-rows-1 lg:grid-cols-2 grid-rows-2 grid-cols-2 gap-sm">
+        <div className={`grid xl:grid-cols-4 xl:grid-rows-1 md:grid-cols-4 md:grid-rows-1 lg:grid-cols-2 grid-rows-2 grid-cols-2 gap-sm ${extractionLoading && "pointer-events-none"}`}>
           {samples.slice(0, 4).map((val, idx) => (
             <SampleImage url={val} idx={idx} key={idx} />
           ))}

@@ -13,7 +13,7 @@ export default function SampleImage({
   idx: number;
   gallery?: boolean;
 }) {
-  const { setImageUrl, setFile, setError } = useAnalyserContext();
+  const { setImageUrl, setFile, setError, extractionLoading } = useAnalyserContext();
   const router = useRouter();
 
   return (
@@ -25,12 +25,13 @@ export default function SampleImage({
       loading="eager"
       alt={`Sample Photo ${idx}`}
       className={cn(
-        // Re-added aspect-square to force the container to be square, and added object-cover
-        // to ensure the image fills the entire area (cropping if necessary) and is centered.
         "aspect-square object-cover rounded-xs hover:border-2 border-outline hover:opacity-75 cursor-pointer transition-all",
         gallery && "w-full"
       )}
       onClick={() => {
+	 if (extractionLoading) {
+	      return null
+	 }
         setImageUrl(url);
         setFile(null);
         setError("");
